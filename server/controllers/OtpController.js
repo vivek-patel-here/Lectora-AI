@@ -27,13 +27,13 @@ export const sendOtpController = async (req, res) => {
     from: process.env.GMAIL_USER,
     to: email,
     subject: "Your LegalEase verification OTP Code",
-    html: `<h2>Your LegalEase Verification OTP</h2>
+    html: `<h2>Your Lectora-AI Verification OTP</h2>
                 <p><strong>${otp}</strong></p>
         <p>This One-Time Password (OTP) is valid for <strong>5 minutes</strong>.
          Please do not share this code with anyone for security reasons.</p>
         <p>If you did not request this verification, please ignore this message.</p>
         <br>
-        <p>Regards,<br>The LegalEase Team</p>`,
+        <p>Regards,<br>The Lectora-ai Team</p>`,
   });
 
   res.status(200).json({ success: true, message: "OTP sent to your email!" });

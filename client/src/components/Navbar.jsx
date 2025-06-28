@@ -13,9 +13,9 @@ function Navbar({ logoutHandler }) {
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo */}
         <div className="text-2xl flex items-center ">
-          <Link to="/" className="flex items-center">
-          <h1 className="text-xl">LegalEase</h1>
-          <img src="/vite.png" alt="legalEase" className="h-8 w-8" />
+          <Link to="/" className="flex items-center gap-2.5">
+          <h1 className="text-xl">Lectora-AI</h1>
+          <img src="/Logo.PNG" alt="legalEase" className="h-8 w-8" />
           </Link>
         </div>
 

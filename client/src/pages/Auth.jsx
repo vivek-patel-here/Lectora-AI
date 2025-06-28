@@ -199,14 +199,14 @@ function OAuth() {
       )}
       <div className="h-screen md:w-1/2 md:flex flex-col justify-between items-center  text-white bg-[url(/loginbg.png)] bg-cover bg-center bg-black hidden ">
         <div className="h-1/10 w-11/12 flex items-center justify-between ">
-          <img src="/vite.png" alt="" className="h-14" />
-          <h1 className="text-2xl">LegalEase</h1>
+          <img src="/Logo.PNG" alt="" className="h-10 rounded-full"  />
+          <h1 className="text-xl">Lectora-AI</h1>
         </div>
         <div className="text-center h-3/12 w-full">
-          <h1 className="text-3xl">AI-Powered Legal Insights. </h1>
+          <h1 className="text-3xl">Feul your Learning </h1>
           <h1 className="text-3xl">
             {" "}
-            Understand what you sign, before you sign.
+           with one prompt
           </h1>
         </div>
       </div>
