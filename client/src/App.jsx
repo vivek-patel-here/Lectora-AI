@@ -8,6 +8,7 @@ import Auth from "./pages/Auth.jsx";
 import Home from "./pages/Home.jsx";
 import Pagenotfound from "./pages/Pagenotfound.jsx";
 import { ToastContainer } from "react-toastify";
+import Dashboard from "./pages/Dashboard.jsx";
 
 function App() {
   const { isAuth, url, setIsAuth, ErrorMsg, successMsg } =
@@ -32,28 +33,14 @@ function App() {
     }
   };
 
-  const LogoutUser = async () => {
-    const response = await fetch(`${url}/auth/log-out`, {
-      method: "GET",
-      headers: {
-        "content-type": "apllication/json",
-      },
-      credentials: "include",
-    });
+ 
 
-    const parsedResponse = await response.json();
-
-    if (!parsedResponse.success) return ErrorMsg(parsedResponse.message);
-    setIsAuth(false);
-    navigate("/");
-    return successMsg("Logout Successful!");
-  };
-
+  //custom cursor
   const [positionX, setPositionX] = useState(100);
   const [positionY, setPositionY] = useState(100);
   const changeCoordinate = (e) => {
-    setPositionX(e.clientX);
-    setPositionY(e.clientY);
+    setPositionX(e.pageX);
+    setPositionY(e.pageY);
   };
 
   useEffect(() => {
@@ -63,33 +50,32 @@ function App() {
   return (
     <>
       <div
-        className=" relative overflow-hidden cursor-none font-sans"
+        className=" relative overflow-hidden cursor-none font-sans min-h-screen"
         onMouseMove={changeCoordinate}
       >
         {/*my custom cursor */}
         <div
+        className="bg-linear-to-r from-purple-600 to-cyan-400"
           style={{
             position: "absolute",
             top: positionY,
             left: positionX,
             transform: "translate(-50%, -50%)",
-            height: "20px",
-            width: "20px",
+            height: "18px",
+            width: "18px",
             borderRadius: "50%",
-            border:"1px solid white",
             pointerEvents: "none",
             zIndex: 1000,
             display:"grid",
             placeItems:"center"
           }}
         >
-          <div className="h-1.5 w-1.5  rounded-2xl bg-white"></div>
         </div>
 
         <Routes>
           <Route
             path="/"
-            element={<Navigate to={isAuth ? "/dashboard" : "/auth"} />}
+            element={<Navigate to={isAuth ? "/home" : "/auth"} />}
           />
 
           <Route
@@ -102,10 +88,19 @@ function App() {
           />
 
           <Route
+            path="/home"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
             path="/dashboard"
             element={
               <ProtectedRoute>
-                <Home func={LogoutUser} />
+                <Dashboard/>
               </ProtectedRoute>
             }
           />

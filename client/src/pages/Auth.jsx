@@ -9,7 +9,7 @@ import OtpModal from "../components/otpModal";
 
 function InputFeild({ type, placeholder, name, value, onChangeHandler }) {
   return (
-    <div className="w-full h-11  bg-[#585270ab] rounded-sm">
+    <div className="w-full h-11  bg-white rounded-sm">
       <input
         type={type}
         placeholder={placeholder}
@@ -188,7 +188,8 @@ function OAuth() {
   };
 
   return (
-    <div className="h-screen w-screen flex items-center justify-between text-white relative">
+    <div className="min-h-screen w-screen flex items-center justify-center  bg-linear-to-br from-purple-200 to-cyan-200  relative">
+    
       {showModal && (
         <OtpModal
           handleSubmit={handleSubmit}
@@ -197,27 +198,19 @@ function OAuth() {
           setShowModal={setShowModal}
         />
       )}
-      <div className="h-screen md:w-1/2 md:flex flex-col justify-between items-center  text-white bg-[url(/loginbg.png)] bg-cover bg-center bg-black hidden ">
-        <div className="h-1/10 w-11/12 flex items-center justify-between ">
-          <img src="/Logo.PNG" alt="" className="h-10 rounded-full"  />
-          <h1 className="text-xl">Lectora-AI</h1>
-        </div>
-        <div className="text-center h-3/12 w-full">
-          <h1 className="text-3xl">Feul your Learning </h1>
-          <h1 className="text-3xl">
-            {" "}
-           with one prompt
-          </h1>
-        </div>
-      </div>
+    
 
-      <div className="h-screen w-screen lg:bg-[#1a183c] bg-[url(/loginbg.png)]  flex flex-col items-center justify-center gap-5 md:w-1/2">
+      <div className="h-fit w-screen   flex flex-col items-center justify-center gap-5 md:w-1/2">
         <form
           action=""
           className="h-7/12 w-8/12 flex flex-col gap-5 "
           onSubmit={handleSubmit}
         >
-          <h1 className="text-4xl">
+          <div className="w-full h-fit flex items-center justify-center gap-10 ">
+            <img src="/Logo.PNG" alt="lectora-AI" className="h-10 w-10 rounded-full"/>
+            <h1 className="bg-linear-to-r from-cyan-500 via-violet-500 to-purple-600 text-transparent bg-clip-text text-4xl font-semibold">Lectora-AI</h1>
+          </div>
+          <h1 className="bg-linear-to-r from-cyan-500 via-violet-500 to-purple-600 text-transparent bg-clip-text text-2xl font-semibold">
             {page === "Login" ? "Login" : "Create an account"}
           </h1>
 
@@ -262,7 +255,7 @@ function OAuth() {
             onChangeHandler={onChangeHandler}
           />
 
-          <div className="w-full h-11  flex items-center bg-[#585270ab] rounded-sm">
+          <div className="w-full h-11  flex items-center bg-white rounded-sm">
             <input
               type={showPassword ? "text" : "password"}
               placeholder={"Enter your password"}
@@ -282,7 +275,7 @@ function OAuth() {
             </span>
           </div>
 
-          <button className="w-full h-11  flex items-center justify-center bg-violet-500 rounded-sm cursor-pointer">
+          <button className="w-full h-11  flex items-center justify-center bg-linear-to-r from-cyan-500 via-violet-500 to-purple-600 rounded-sm cursor-pointer text-white">
             {page == "Signup" ? "Create Account" : "Login"}
           </button>
         </form>
@@ -302,11 +295,13 @@ function OAuth() {
         </div>
         <button
           onClick={googleLogin}
-          className="w-8/12 h-11  flex items-center justify-center gap-2 bg-transparent border-1 rounded-sm cursor-pointer"
+          className="w-8/12 h-11 border-white text-violet  flex items-center justify-center gap-2 bg-transparent border-1 rounded-sm cursor-pointer"
         >
           <FcGoogle className="text-2xl" /> Google
         </button>
       </div>
+
+
     </div>
   );
 }

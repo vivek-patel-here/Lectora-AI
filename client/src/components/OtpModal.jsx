@@ -23,7 +23,7 @@ function OtpModal({handleSubmit,otp,setOtp,setShowModal}) {
               shouldAutoFocus
               renderSeparator={<span>-</span>}
               renderInput={(props) => <input {...props} />}
-              inputStyle="w-14 h-12 border border-gray-500 rounded-sm mx-1 text-center text-xl focus:outline-none "
+              inputStyle="w-14 h-12 border border-gray-500 rounded-sm mx-1 text-center text-xl text-white focus:outline-none "
               containerStyle="flex justify-between  lg:w-1/4 w-1/2 items-center h-1/8 "
             />
 
