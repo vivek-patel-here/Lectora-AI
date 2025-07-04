@@ -9,9 +9,14 @@ import Home from "./pages/Home.jsx";
 import Pagenotfound from "./pages/Pagenotfound.jsx";
 import { ToastContainer } from "react-toastify";
 import Dashboard from "./pages/Dashboard.jsx";
+import CodeEditor from "./pages/CodeEditor.jsx";
+import Chat from  "./pages/Chat.jsx"
+import Lecture from "./pages/Lecture.jsx";
+import Sidebar from "./components/Sidebar.jsx";
+import Cursor from "./components/Cursor.jsx";
 
 function App() {
-  const { isAuth, url, setIsAuth, ErrorMsg, successMsg } =
+  const { isAuth, url, setIsAuth, ErrorMsg, successMsg ,setCurUser} =
     useContext(GlobalContext);
   const navigate = useNavigate();
   const IsUserLogin = async () => {
@@ -27,6 +32,7 @@ function App() {
       const parsedResponse = await response.json();
       if (!parsedResponse.success) return;
       setIsAuth(true);
+      setCurUser(parsedResponse.curUser)
       navigate("/");
     } catch (err) {
       return;
@@ -52,25 +58,10 @@ function App() {
       <div
         className=" relative overflow-hidden cursor-none font-sans min-h-screen"
         onMouseMove={changeCoordinate}
-      >
-        {/*my custom cursor */}
-        <div
-        className="bg-linear-to-r from-purple-600 to-cyan-400"
-          style={{
-            position: "absolute",
-            top: positionY,
-            left: positionX,
-            transform: "translate(-50%, -50%)",
-            height: "18px",
-            width: "18px",
-            borderRadius: "50%",
-            pointerEvents: "none",
-            zIndex: 1000,
-            display:"grid",
-            placeItems:"center"
-          }}
         >
-        </div>
+        <Sidebar/>
+        {/*my custom cursor */}
+       <Cursor positionX={positionX} positionY={positionY}/>
 
         <Routes>
           <Route
@@ -101,6 +92,33 @@ function App() {
             element={
               <ProtectedRoute>
                 <Dashboard/>
+              </ProtectedRoute>
+            }
+          />
+
+           <Route
+            path="/lectures"
+            element={
+              <ProtectedRoute>
+                <Lecture/>
+              </ProtectedRoute>
+            }
+          />
+
+           <Route
+            path="/chat"
+            element={
+              <ProtectedRoute>
+                <Chat/>
+              </ProtectedRoute>
+            }
+          />
+
+           <Route
+            path="/code"
+            element={
+              <ProtectedRoute>
+                <CodeEditor/>
               </ProtectedRoute>
             }
           />

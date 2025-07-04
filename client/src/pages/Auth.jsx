@@ -33,7 +33,7 @@ function Auth() {
 
 function OAuth() {
   const navigate = useNavigate();
-  const { isAuth, setIsAuth, url, ErrorMsg, successMsg } =
+  const { isAuth, setIsAuth, url, ErrorMsg, successMsg ,curUser,setCurUser} =
     useContext(GlobalContext);
 
   //google login function handlers
@@ -58,6 +58,7 @@ function OAuth() {
         }
         setIsAuth(true);
         navigate("/");
+        setCurUser(parsedResponse.curUser);
         successMsg(parsedResponse.message);
       }
     } catch (err) {
@@ -150,6 +151,7 @@ function OAuth() {
           return ErrorMsg(parsedResponse.message);
         setIsAuth(true);
         navigate("/");
+        setCurUser(parsedResponse.curUser);
         return successMsg(parsedResponse.message);
       }
     } catch (err) {
@@ -174,6 +176,7 @@ function OAuth() {
       setIsAuth(true);
       navigate("/");
       console.log(parsedResponse);
+        setCurUser(parsedResponse.curUser);
       return successMsg(parsedResponse.message);
 
     }catch(err){

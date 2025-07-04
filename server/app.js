@@ -7,6 +7,7 @@ import { ConnectToDB } from "./middlewares/DBConnect.js";
 import AuthRoute from "./Routes/Auth.js"
 import OtpRoute from "./Routes/OtpRoute.js"
 import LectureRoute from "./Routes/LectureRoute.js"
+import codeRoute  from "./Routes/CodeRunnerRoute.js"
 const app = express();
 
 
@@ -30,6 +31,7 @@ app.use(CORS({
 //routes
 app.use("/auth",AuthRoute);
 app.use("/otp",OtpRoute);
+app.use("/code", codeRoute);
 
 app.use("/lecture",LectureRoute)
 

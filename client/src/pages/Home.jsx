@@ -26,6 +26,8 @@ function Home() {
     await fetchCourse(input);
   };
 
+  
+
   return (
     <div className="w-screen h-fit">
       <Hero/>

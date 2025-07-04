@@ -102,3 +102,16 @@ Topic: ${userPrompt}
         message: "Lecture saved successfully!😊",
       });
   }
+
+
+export const getUserLecture=async(req,res)=>{
+    const {email} = req.user;
+    const userLecture = await Lecture.find({userEmail:email});
+    if(!userLecture){
+      console.log(`Unable to fetch Lecture corresponds to user : ${email}`);
+      return res.status(500).json({success:false,message:"Unable to fetch your Lecture"});
+    }
+    return res.status(200).json({success:true,userLecture})
+
+    
+}

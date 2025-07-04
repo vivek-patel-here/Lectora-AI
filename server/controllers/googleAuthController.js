@@ -67,7 +67,7 @@ const googleLogin = async (req, res) => {
     expires: new_refreshTokenExpiry,
   });
 
-  res.status(200).json({ success: true, message: "User Login Successfully!" });
+  res.status(200).json({ success: true, message: "User Login Successfully!" ,curUser:name});
 };
 
 export default googleLogin;

@@ -69,7 +69,7 @@ export const signupController = async (req, res) => {
     expires: new_refreshTokenExpiry,
   });
 
-  res.status(200).json({ success: true, message: "Sign in Successful!",isverified : registeredUser.isVerifiedEmail });
+  res.status(200).json({ success: true, message: "Sign in Successful!",curUser:username});
 };
 
 //Login controller
@@ -125,6 +125,6 @@ if (!updatedUser) {
     expires: new_refreshTokenExpiry,
   });
 
-  res.status(200).json({ success: true, message: "Log in Successfull!" ,isverified : updatedUser.isVerifiedEmail });
+  res.status(200).json({ success: true, message: "Log in Successfull!" , curUser:savedUser.username });
 
 };

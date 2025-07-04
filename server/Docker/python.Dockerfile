@@ -1,0 +1,8 @@
+FROM python:3.10-slim
+
+WORKDIR /app
+
+COPY run_code.sh .
+RUN chmod +x run_code.sh
+
+CMD ["./run_code.sh"]

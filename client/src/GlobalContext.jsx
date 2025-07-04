@@ -31,6 +31,11 @@ const GlobalContextProvider = ({ children }) => {
     });
   };
 
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [curUser, setCurUser] = useState("");
+
+  const [mode, setMode] = useState(0); //0 ->light &&   1 -> dark
+
   const [topic, setTopic] = useState("");
   const [theory, setTheory] = useState("");
   const [detailedExplanation, setDetailedExplanation] = useState("");
@@ -48,7 +53,7 @@ const GlobalContextProvider = ({ children }) => {
           "content-Type": "application/json",
         },
         body: JSON.stringify({ userPrompt: query }),
-        credentials:"include"
+        credentials: "include",
       });
 
       const parsedResponse = await response.json();
@@ -71,22 +76,23 @@ const GlobalContextProvider = ({ children }) => {
     }
   };
 
-   const LogoutUser = async () => {
-      const response = await fetch(`${url}/auth/log-out`, {
-        method: "GET",
-        headers: {
-          "content-type": "apllication/json",
-        },
-        credentials: "include",
-      });
-  
-      const parsedResponse = await response.json();
-  
-      if (!parsedResponse.success) return ErrorMsg(parsedResponse.message);
-      setIsAuth(false);
-      navigate("/");
-      return successMsg("Logout Successful!");
-    };
+  const LogoutUser = async () => {
+    const response = await fetch(`${url}/auth/log-out`, {
+      method: "GET",
+      headers: {
+        "content-type": "apllication/json",
+      },
+      credentials: "include",
+    });
+
+    const parsedResponse = await response.json();
+
+    if (!parsedResponse.success) return ErrorMsg(parsedResponse.message);
+    setIsAuth(false);
+    navigate("/");
+    setCurUser("");
+    return successMsg("Logout Successful!");
+  };
 
   return (
     <GlobalContext.Provider
@@ -104,7 +110,13 @@ const GlobalContextProvider = ({ children }) => {
         youtubeIds,
         exercise,
         quizzes,
-        LogoutUser
+        LogoutUser,
+        mode,
+        setMode,
+        sidebarOpen,
+        setSidebarOpen,
+        curUser,
+        setCurUser,
       }}
     >
       {children}
