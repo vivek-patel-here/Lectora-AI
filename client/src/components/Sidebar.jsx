@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { GlobalContext } from "../GlobalContext";
 import { Link, useNavigate } from "react-router-dom";
 import { MdDashboard } from "react-icons/md";
@@ -11,6 +11,17 @@ import { IoIosClose } from "react-icons/io";
 export default function Sidebar() {
   const { LogoutUser, sidebarOpen, setSidebarOpen } = useContext(GlobalContext);
   const navigate = useNavigate();
+  useEffect(()=>{
+    if(sidebarOpen){
+      document.body.style.overflow="hidden";
+    }else{
+      document.body.style.overflow="auto";
+    }
+
+    return ()=>{
+      document.body.style.overflow
+    }
+  })
   return (
     <div
       className="h-screen w-70 border-r-1 transition-all shadow-black shadow-2xl   border-[#50505027] z-50  bg-white flex gap-5 flex-col pl-5 pt-5 absolute "
@@ -30,7 +41,7 @@ export default function Sidebar() {
           Lectora-AI
         </h1>
       </div>
-      <button className="border w-8/10 h-10 rounded-md text-white bg-purple-600 " onClick={()=>{navigate("/lectures");setSidebarOpen(false);}}>
+      <button className="border w-8/10 h-10 rounded-md text-white bg-purple-600 " onClick={()=>{navigate("/create");setSidebarOpen(false);}}>
         + Create Lecture
       </button>
       <nav className=" w-full h-3/4 flex flex-col ">

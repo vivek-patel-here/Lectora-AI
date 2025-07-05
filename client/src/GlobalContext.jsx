@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState,useEffect } from "react";
 import { toast } from "react-toastify";
 export const GlobalContext = createContext();
 
@@ -58,7 +58,8 @@ const GlobalContextProvider = ({ children }) => {
 
       const parsedResponse = await response.json();
       if (!parsedResponse.success) {
-        return ErrorMsg(parsedResponse.message);
+        ErrorMsg(parsedResponse.message);
+        return false;
       }
       console.log(parsedResponse);
       //setting the states
@@ -69,10 +70,12 @@ const GlobalContextProvider = ({ children }) => {
       setYoutubeIds(parsedResponse.data.youtubeIds);
       setExercise(parsedResponse.data.exercise);
       setQuizzes(parsedResponse.data.quizzes);
-      return successMsg("Lecture Generate Successfully!");
+      successMsg("Lecture Generate Successfully!");
+      return true; 
     } catch (err) {
       console.error(err);
-      return ErrorMsg("Error! Please reload the page and try again");
+      ErrorMsg("Error! Please reload the page and try again");
+      return false; 
     }
   };
 
@@ -91,8 +94,33 @@ const GlobalContextProvider = ({ children }) => {
     setIsAuth(false);
     navigate("/");
     setCurUser("");
+    setSidebarOpen(false);
     return successMsg("Logout Successful!");
   };
+
+  const IsUserLogin = async () => {
+      try {
+        const response = await fetch(`${url}/auth/verify`, {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+          },
+          credentials: "include",
+        });
+  
+        const parsedResponse = await response.json();
+        if (!parsedResponse.success) return;
+        setIsAuth(true);
+        setCurUser(parsedResponse.curUser)
+        navigate("/");
+      } catch (err) {
+        return;
+      }
+    };
+
+    useEffect(() => {
+    IsUserLogin();
+  }, []);
 
   return (
     <GlobalContext.Provider

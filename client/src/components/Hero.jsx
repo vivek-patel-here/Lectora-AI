@@ -22,7 +22,7 @@ const navigate =useNavigate();
         or self-learner, just ask and start mastering.
       </p>
       <div className="h-15 w-19/20 md:w-6/10 flex items-center px-1 gap-5 justify-center flex-wrap">
-        <button onClick={()=>navigate("/dashboard")} className="border bg-linear-to-r from-cyan-500 via-blue-500 to-purple-600  py-2 px-5 text-white rounded-full">
+        <button onClick={()=>navigate("/create")} className="border bg-linear-to-r from-cyan-500 via-blue-500 to-purple-600  py-2 px-5 text-white rounded-full">
           Start Creating free &rarr;
         </button>
         <button className="border py-2 px-5 rounded-full text-[#303030] ">Watch Demo</button>

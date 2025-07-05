@@ -15,7 +15,11 @@ Respond **only** with a **valid JSON object** in the following structure:
   "topic": "A brief headline summarizing the topic.",
   "theory": "A 3–4 line introductory summary in simple, easy-to-understand language.",
   "detailedExplanation": "A thorough explanationof about 2-3 pages of the topic, including key concepts, step-by-step logic, working principles, real-life applications, and edge cases. For technical topics (e.g., recursion, pointers, etc.), include details like memory handling, stack usage, common pitfalls, and performance considerations.",
-  "codeSnippet": "If applicable (especially for programming/technical topics), include a full working code snippet with proper indentation and inline comments explaining each step.",
+  codeSnippet":{
+      (Only If Possible and query is related to technical topics)
+      lang:"programming language",
+      code:""If applicable (especially for programming/technical topics), include a full working code snippet with proper indentation and inline comments explaining each step.""  
+      } ,
   "exercise": [
     "Question 1",
     "Question 2",

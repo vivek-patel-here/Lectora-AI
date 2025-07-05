@@ -10,36 +10,18 @@ import Pagenotfound from "./pages/Pagenotfound.jsx";
 import { ToastContainer } from "react-toastify";
 import Dashboard from "./pages/Dashboard.jsx";
 import CodeEditor from "./pages/CodeEditor.jsx";
-import Chat from  "./pages/Chat.jsx"
+import Chat from "./pages/Chat.jsx";
 import Lecture from "./pages/Lecture.jsx";
 import Sidebar from "./components/Sidebar.jsx";
 import Cursor from "./components/Cursor.jsx";
+import Footer from "./components/Footer.jsx";
+import Theory from "./pages/Theory.jsx";
+import VideoModal from "./components/VideoModal.jsx";
 
 function App() {
-  const { isAuth, url, setIsAuth, ErrorMsg, successMsg ,setCurUser} =
+  const { isAuth, url, setIsAuth, ErrorMsg, successMsg, setCurUser } =
     useContext(GlobalContext);
   const navigate = useNavigate();
-  const IsUserLogin = async () => {
-    try {
-      const response = await fetch(`${url}/auth/verify`, {
-        method: "GET",
-        headers: {
-          "content-type": "application/json",
-        },
-        credentials: "include",
-      });
-
-      const parsedResponse = await response.json();
-      if (!parsedResponse.success) return;
-      setIsAuth(true);
-      setCurUser(parsedResponse.curUser)
-      navigate("/");
-    } catch (err) {
-      return;
-    }
-  };
-
- 
 
   //custom cursor
   const [positionX, setPositionX] = useState(100);
@@ -48,20 +30,23 @@ function App() {
     setPositionX(e.pageX);
     setPositionY(e.pageY);
   };
-
-  useEffect(() => {
-    IsUserLogin();
-  }, []);
+  const [open, setOpen] = useState(false);
+  const [vid, setVid] = useState(false);
+  const openModelFunction = (videoId) => {
+    setVid(videoId);
+    setOpen(true);
+  };
 
   return (
     <>
       <div
         className=" relative overflow-hidden cursor-none font-sans min-h-screen"
         onMouseMove={changeCoordinate}
-        >
-        <Sidebar/>
+      >
+        {open && <VideoModal vid={vid} open={open} setOpen={setOpen} />}
+        {isAuth && <Sidebar />}
         {/*my custom cursor */}
-       <Cursor positionX={positionX} positionY={positionY}/>
+        <Cursor positionX={positionX} positionY={positionY} />
 
         <Routes>
           <Route
@@ -91,40 +76,50 @@ function App() {
             path="/dashboard"
             element={
               <ProtectedRoute>
-                <Dashboard/>
+                <Dashboard />
               </ProtectedRoute>
             }
           />
 
-           <Route
-            path="/lectures"
+          <Route
+            path="/create"
             element={
               <ProtectedRoute>
-                <Lecture/>
+                <Lecture />
               </ProtectedRoute>
             }
           />
 
-           <Route
+          <Route
             path="/chat"
             element={
               <ProtectedRoute>
-                <Chat/>
+                <Chat />
               </ProtectedRoute>
             }
           />
 
-           <Route
+          <Route
             path="/code"
             element={
               <ProtectedRoute>
-                <CodeEditor/>
+                <CodeEditor />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/theory"
+            element={
+              <ProtectedRoute>
+                <Theory openModelFunction={openModelFunction} />
               </ProtectedRoute>
             }
           />
 
           <Route path="*" element={<Pagenotfound />} />
         </Routes>
+        {isAuth && <Footer />}
       </div>
 
       <ToastContainer

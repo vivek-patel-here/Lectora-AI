@@ -19,6 +19,15 @@ const QuizzesSchema = new Schema({
   },
 });
 
+const codeSchema = new Schema({
+  lang: {
+    type: String,
+  },
+  code: {
+    type: String,
+  },
+});
+
 const LectureSchema = new Schema(
   {
     userEmail: {
@@ -40,20 +49,16 @@ const LectureSchema = new Schema(
       required: true,
     },
     codeSnippet: {
-      type: String,
-      required: true,
+      type: codeSchema,
     },
     youtubeIds: {
       type: [String],
-      required: true,
     },
     exercise: {
       type: [String],
-      required: true,
     },
     quizzes: {
       type: [QuizzesSchema],
-      required: true,
     },
   },
   { timestamps: true }
