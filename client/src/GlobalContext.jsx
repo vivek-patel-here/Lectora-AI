@@ -1,5 +1,7 @@
-import { createContext, useState,useEffect } from "react";
+import { createContext, useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import { usePDF } from "react-to-pdf";
+
 export const GlobalContext = createContext();
 
 const GlobalContextProvider = ({ children }) => {
@@ -17,6 +19,8 @@ const GlobalContextProvider = ({ children }) => {
       theme: "colored",
     });
   };
+
+  const { toPDF, targetRef } = usePDF({ filename: "notes.pdf" });
 
   const successMsg = (msg) => {
     return toast.success(msg, {
@@ -43,6 +47,7 @@ const GlobalContextProvider = ({ children }) => {
   const [youtubeIds, setYoutubeIds] = useState([]);
   const [exercise, setExercise] = useState([]);
   const [quizzes, setQuizzes] = useState([]);
+  const [allLecture, setAllLectures] = useState([]);
 
   //function to fetch generated lecture based on user query!
   const fetchCourse = async (query) => {
@@ -61,7 +66,6 @@ const GlobalContextProvider = ({ children }) => {
         ErrorMsg(parsedResponse.message);
         return false;
       }
-      console.log(parsedResponse);
       //setting the states
       setTopic(parsedResponse.data.topic);
       setTheory(parsedResponse.data.theory);
@@ -71,11 +75,11 @@ const GlobalContextProvider = ({ children }) => {
       setExercise(parsedResponse.data.exercise);
       setQuizzes(parsedResponse.data.quizzes);
       successMsg("Lecture Generate Successfully!");
-      return true; 
+      return true;
     } catch (err) {
       console.error(err);
       ErrorMsg("Error! Please reload the page and try again");
-      return false; 
+      return false;
     }
   };
 
@@ -99,27 +103,46 @@ const GlobalContextProvider = ({ children }) => {
   };
 
   const IsUserLogin = async () => {
-      try {
-        const response = await fetch(`${url}/auth/verify`, {
-          method: "GET",
-          headers: {
-            "content-type": "application/json",
-          },
-          credentials: "include",
-        });
-  
-        const parsedResponse = await response.json();
-        if (!parsedResponse.success) return;
-        setIsAuth(true);
-        setCurUser(parsedResponse.curUser)
-        navigate("/");
-      } catch (err) {
-        return;
-      }
-    };
+    try {
+      const response = await fetch(`${url}/auth/verify`, {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+        },
+        credentials: "include",
+      });
 
-    useEffect(() => {
+      const parsedResponse = await response.json();
+      if (!parsedResponse.success) return;
+      setIsAuth(true);
+      setCurUser(parsedResponse.curUser);
+      navigate("/");
+    } catch (err) {
+      return;
+    }
+  };
+
+  const GetUserLectures = async () => {
+    try {
+      const response = await fetch(`${url}/lecture/get`, {
+        method: "GET",
+        headers: {
+          "content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+
+      const parsedResponse = await response.json();
+      if (!parsedResponse.success) return ErrorMsg(parsedResponse.message);
+      return setAllLectures(parsedResponse.userLecture.reverse());
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
     IsUserLogin();
+    GetUserLectures();
   }, []);
 
   return (
@@ -145,6 +168,18 @@ const GlobalContextProvider = ({ children }) => {
         setSidebarOpen,
         curUser,
         setCurUser,
+        toPDF,
+        targetRef,
+        allLecture,
+        setAllLectures,
+        setTopic,
+        setTheory,
+        setDetailedExplanation,
+        setCodeSnippet,
+        setYoutubeIds,
+        setExercise,
+        setQuizzes,
+        GetUserLectures
       }}
     >
       {children}

@@ -8,7 +8,11 @@ import AuthRoute from "./Routes/Auth.js"
 import OtpRoute from "./Routes/OtpRoute.js"
 import LectureRoute from "./Routes/LectureRoute.js"
 import codeRoute  from "./Routes/CodeRunnerRoute.js"
+import {createServer} from "node:http";
+import { connectToSocket } from "./Configs/socketConfig.js";
 const app = express();
+const server = createServer(app);
+connectToSocket(server);
 
 
 //Database - Connection
@@ -32,18 +36,17 @@ app.use(CORS({
 app.use("/auth",AuthRoute);
 app.use("/otp",OtpRoute);
 app.use("/code", codeRoute);
+app.use("/lecture",LectureRoute);
+// app.use("/chat",ChatRoute);
 
-app.use("/lecture",LectureRoute)
-
+//error handler
 app.use((err,req,res,next)=>{
     console.log(err);
     res.status(500).json({success:false,message:"Internal Server Error ! Try again later."})
 })
 
-
-
 //listening
-app.listen(3000,()=>{
+server.listen(3000,()=>{
     console.log("Server is listening at port 3000!");
 })
 

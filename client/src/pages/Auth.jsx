@@ -52,7 +52,6 @@ function OAuth() {
         );
 
         const parsedResponse = await response.json();
-        console.log("Response from backend : ", parsedResponse);
         if (parsedResponse.success == false) {
           return ErrorMsg(parsedResponse.message);
         }
@@ -175,7 +174,6 @@ function OAuth() {
       if(!parsedResponse.success) return ErrorMsg(parsedResponse.message);
       setIsAuth(true);
       navigate("/");
-      console.log(parsedResponse);
         setCurUser(parsedResponse.curUser);
       return successMsg(parsedResponse.message);
 

@@ -55,14 +55,14 @@ export default function Sidebar() {
               <MdDashboard /> Dashboard
             </Link>
           </li>
-          <li className="hover:bg-[#0000000e] p-1 rounded-md w-19/20" onClick={()=>setSidebarOpen(false)}>
+          {/* <li className="hover:bg-[#0000000e] p-1 rounded-md w-19/20" onClick={()=>setSidebarOpen(false)}>
             <Link
               to="/lectures"
               className="flex items-center gap-5  text-[#000000ca] text-md"
             >
               <FaBookOpen /> My Lectures
             </Link>
-          </li>
+          </li> */}
           <li className="hover:bg-[#0000000e] p-1 rounded-md w-19/20" onClick={()=>setSidebarOpen(false)}>
             <Link
               to="/code"
