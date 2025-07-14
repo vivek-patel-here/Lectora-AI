@@ -26,7 +26,7 @@ export const sendOtpController = async (req, res) => {
   await transporter.sendMail({
     from: process.env.GMAIL_USER,
     to: email,
-    subject: "Your LegalEase verification OTP Code",
+    subject: "Your Lectora-AI verification OTP Code",
     html: `<h2>Your Lectora-AI Verification OTP</h2>
                 <p><strong>${otp}</strong></p>
         <p>This One-Time Password (OTP) is valid for <strong>5 minutes</strong>.

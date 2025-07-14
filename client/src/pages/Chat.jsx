@@ -13,7 +13,6 @@ export default function Chat() {
   const { allLecture, url ,ErrorMsg} = useContext(GlobalContext);
   const [chats, setChats] = useState([]);
   const [topic, setTopic] = useState("General Query");
-  const [email,setEmail] =useState("");
 
 
   const topicChangeHandler = (e) => {
@@ -21,7 +20,7 @@ export default function Chat() {
     setTopic(e.target.value);
     setChats([]);
     fetchPrevChats();
-    socketRef.current.emit("chat_init",{topic,chats,email});
+    socketRef.current.emit("chat_init",{topic});
     };
 
   const fetchPrevChats = async () => {
@@ -48,14 +47,21 @@ export default function Chat() {
         return [...prev,{role:"user",message:query}]
     });
     
-    socketRef.current.emit("user_query",{query,topic,email});
+    socketRef.current.emit("user_query",{query,topic});
     setQuery("");
   }
 
   useEffect(() => {
     fetchPrevChats();
-    socketRef.current = io("http://localhost:3000");
-    socketRef.current.emit("chat_init",{topic,chats,email});
+
+    socketRef.current = io("http://localhost:3000",{
+      withCredentials: true,
+    });
+
+
+    socketRef.current.emit("chat_init",{topic});
+
+
     socketRef.current.on("llm_response",(msg)=>{
       setChats((prev)=>{
         return [...prev,{role:"bot",message:msg}]

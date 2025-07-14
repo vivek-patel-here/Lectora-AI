@@ -13,7 +13,7 @@ const userSchema = new Schema(
     email: {
       type: String,
       required: true,
-      index:true,
+      index: true,
       unique: true,
       match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/],
     },
@@ -37,7 +37,8 @@ const userSchema = new Schema(
     refreshToken: {
       type: String,
       default: null,
-      unique:true
+      unique: true,
+      sparse: true,
     },
     refreshTokenExpiry: {
       type: Date,
