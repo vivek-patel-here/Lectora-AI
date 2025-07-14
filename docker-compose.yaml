@@ -1,0 +1,33 @@
+services:
+  fronend:
+    build: ./client
+    ports:
+      - "5173:5173"
+    networks:
+      - lectora-ai
+  backend:
+    build: ./server
+    ports:
+      - "3000:3000"
+    networks:
+      - lectora-ai
+    depends_on:
+      - mongodb
+    env_file:
+      - ./server/.env
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    networks:
+      - lectora-ai
+    volumes:
+      - mongo-data:/data/db
+
+networks:
+  lectora-ai:
+    driver: bridge
+
+volumes:
+  mongo-data:
+    driver: local

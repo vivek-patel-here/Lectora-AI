@@ -1,8 +1,8 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import Header from "../components/Header";
+import Header from "../components/Header.jsx";
 import { RiRobot2Line } from "react-icons/ri";
 import { TiUserOutline } from "react-icons/ti";
-import { GlobalContext } from "../GlobalContext";
+import { GlobalContext } from "../GlobalContext.jsx";
 
 //io connection
 import { io } from "socket.io-client";
@@ -12,12 +12,17 @@ export default function Chat() {
   const [query, setQuery] = useState("");
   const { allLecture, url ,ErrorMsg} = useContext(GlobalContext);
   const [chats, setChats] = useState([]);
-  const [chatId,setChatId] =useState("");
   const [topic, setTopic] = useState("General Query");
+  const [email,setEmail] =useState("");
+
+
   const topicChangeHandler = (e) => {
     e.preventDefault();
     setTopic(e.target.value);
-  };
+    setChats([]);
+    fetchPrevChats();
+    socketRef.current.emit("chat_init",{topic,chats,email});
+    };
 
   const fetchPrevChats = async () => {
     try {
@@ -29,15 +34,11 @@ export default function Chat() {
         body: JSON.stringify({ topic }),
         credentials: "include",
       });
-
       const parsedResponse = await response.json();
-      if (!parsedResponse.success) {
-        return;
-      }
-      setChats(parsedResponse?.chat?.messages);
-      setChatId(parsedResponse?.chat?._id);
+      setChats(parsedResponse?.chats);
+      setEmail(parsedResponse?.email);
     } catch (err) {
-      return ErrorMsg("Previous chat history could not be retrieved.");
+      console.error(err);
     }
   };
 
@@ -47,28 +48,24 @@ export default function Chat() {
         return [...prev,{role:"user",message:query}]
     });
     
-    socketRef.current.emit("user_query",{query,chatId});
+    socketRef.current.emit("user_query",{query,topic,email});
     setQuery("");
   }
 
   useEffect(() => {
     fetchPrevChats();
-  }, [topic]);
-
-  useEffect(() => {
     socketRef.current = io("http://localhost:3000");
-
+    socketRef.current.emit("chat_init",{topic,chats,email});
     socketRef.current.on("llm_response",(msg)=>{
       setChats((prev)=>{
         return [...prev,{role:"bot",message:msg}]
       })
     })
 
-
     return ()=>{
       socketRef.current.disconnect();
     }
-  }, []);
+  }, [topic]);
 
   return (
     <div className="min-h-screen w-screen flex flex-col items-center ">

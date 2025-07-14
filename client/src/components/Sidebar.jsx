@@ -1,8 +1,7 @@
 import { useContext, useEffect } from "react";
-import { GlobalContext } from "../GlobalContext";
+import { GlobalContext } from "../GlobalContext.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import { MdDashboard } from "react-icons/md";
-import { FaBookOpen } from "react-icons/fa";
 import { FaCode } from "react-icons/fa";
 import { RiGeminiFill } from "react-icons/ri";
 import { IoSettingsSharp } from "react-icons/io5";

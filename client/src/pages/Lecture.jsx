@@ -1,4 +1,4 @@
-import Header from "../components/Header";
+import Header from "../components/Header.jsx";
 import { useContext, useState } from "react";
 import { GlobalContext } from "../GlobalContext.jsx";
 import { BsArrowUpCircle } from "react-icons/bs";

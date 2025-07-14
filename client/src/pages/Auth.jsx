@@ -1,11 +1,11 @@
 import { useGoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GlobalContext } from "../GlobalContext";
+import { GlobalContext } from "../GlobalContext.jsx";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import OtpModal from "../components/otpModal";
+import OtpModal from "../components/OtpModal.jsx";
 
 function InputFeild({ type, placeholder, name, value, onChangeHandler }) {
   return (

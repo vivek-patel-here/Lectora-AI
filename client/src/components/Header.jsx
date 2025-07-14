@@ -3,7 +3,7 @@ import { FaRegUser } from "react-icons/fa";
 import { FiSidebar } from "react-icons/fi";
 import { MdDarkMode } from "react-icons/md";
 import { MdOutlineLightMode } from "react-icons/md";
-import { GlobalContext } from "../GlobalContext";
+import { GlobalContext } from "../GlobalContext.jsx";
 function Header({heading}) {
   const { mode, setMode ,setSidebarOpen,curUser } = useContext(GlobalContext);
 

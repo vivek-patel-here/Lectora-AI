@@ -17,9 +17,9 @@ router.post(
     const findChat = await Chat.findOne({userEmail:email,topic});
     if(!findChat){
         console.log("Error from Chats : Try to fetch uninitialised Chat Schema!⛔");
-        return res.status(400).json({success:false,message:"Chat not inititalised yet!"});
+        return res.status(400).json({success:false,message:"Chat not inititalised yet!",chats:[],email});
     }
-    return res.statue(200).json({succes:true,message:"Chats fetched successsfully!",chat:findChat});
+    return res.statue(200).json({success:true,message:"Chats fetched successsfully!",chats:findChat,email});
   }
 );
 

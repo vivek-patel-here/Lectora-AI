@@ -1,4 +1,4 @@
-import Header from "../components/Header";
+import Header from "../components/Header.jsx";
 import Editor from "@monaco-editor/react";
 import { useState } from "react";
 import { SiRundeck } from "react-icons/si";

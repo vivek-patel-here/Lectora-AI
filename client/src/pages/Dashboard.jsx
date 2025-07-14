@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
-import Header from "../components/Header";
-import { GlobalContext } from "../GlobalContext";
+import Header from "../components/Header.jsx";
+import { GlobalContext } from "../GlobalContext.jsx";
 import { FaBook } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { TiDocumentText } from "react-icons/ti";
@@ -151,8 +151,8 @@ function Dashboard() {
     for (let i of allLecture) {
       if (!i) break;
       let dt = i?.createdAt?.split("-");
-      dt = dt[0] + dt[1];
-      dt = dt;
+      dt = dt[0] + dt[2].slice(0,2);
+      console.log("curDate" ,curDate)
       if (dt == curDate) cnt++;
     }
     return cnt;
