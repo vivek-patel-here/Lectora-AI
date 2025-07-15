@@ -152,7 +152,6 @@ function Dashboard() {
       if (!i) break;
       let dt = i?.createdAt?.split("-");
       dt = dt[0] + dt[2].slice(0,2);
-      console.log("curDate" ,curDate)
       if (dt == curDate) cnt++;
     }
     return cnt;

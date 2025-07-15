@@ -8,6 +8,7 @@ import AuthRoute from "./Routes/Auth.js"
 import OtpRoute from "./Routes/OtpRoute.js"
 import LectureRoute from "./Routes/LectureRoute.js"
 import codeRoute  from "./Routes/CodeRunnerRoute.js"
+import ChatRoute from "./Routes/ChatRoute.js";
 import {createServer} from "node:http";
 import { connectToSocket } from "./Configs/socketConfig.js";
 const app = express();
@@ -37,7 +38,7 @@ app.use("/auth",AuthRoute);
 app.use("/otp",OtpRoute);
 app.use("/code", codeRoute);
 app.use("/lecture",LectureRoute);
-// app.use("/chat",ChatRoute);
+app.use("/chat",ChatRoute);
 
 //error handler
 app.use((err,req,res,next)=>{

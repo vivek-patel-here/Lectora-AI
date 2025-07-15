@@ -1,6 +1,7 @@
 import { model } from "../Configs/gptConfig.js";
 import { fetchYoutubeVideo } from "../middlewares/fetchYoutubeVideo.js";
 import { Lecture } from "../models/lectureModel.js";
+import { Chat } from "../models/ChatModel.js";
 
 export const lectureController = async (req, res) => {
   const { userPrompt } = req.body;
@@ -127,5 +128,6 @@ export const deleteLecture = async (req, res) => {
       .status(500)
       .json({ success: false, message: "Unable to fetch your Lecture" });
   }
-   return res.status(200).json({ success: true, message:"Lecture Deleted!" });
+  await Chat.deleteMany({ topic: resp.topic, userEmail: email });
+  return res.status(200).json({ success: true, message: "Lecture Deleted!" });
 };

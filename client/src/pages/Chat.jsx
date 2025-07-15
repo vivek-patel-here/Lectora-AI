@@ -10,18 +10,20 @@ import { io } from "socket.io-client";
 export default function Chat() {
   const socketRef = useRef(null);
   const [query, setQuery] = useState("");
-  const { allLecture, url ,ErrorMsg} = useContext(GlobalContext);
+  const { allLecture, url, ErrorMsg } = useContext(GlobalContext);
   const [chats, setChats] = useState([]);
   const [topic, setTopic] = useState("General Query");
+  const [wait, setWait] = useState(false);
 
+  const scrollRef = useRef(null);
 
   const topicChangeHandler = (e) => {
     e.preventDefault();
     setTopic(e.target.value);
     setChats([]);
     fetchPrevChats();
-    socketRef.current.emit("chat_init",{topic});
-    };
+    socketRef.current.emit("chat_init", { topic });
+  };
 
   const fetchPrevChats = async () => {
     try {
@@ -34,45 +36,50 @@ export default function Chat() {
         credentials: "include",
       });
       const parsedResponse = await response.json();
+      if (!parsedResponse.success) {
+        setChats([]);
+        return;
+      }
       setChats(parsedResponse?.chats);
-      setEmail(parsedResponse?.email);
     } catch (err) {
       console.error(err);
     }
   };
 
-  const onSubmitHandler=async(e)=>{
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
-    setChats((prev)=>{
-        return [...prev,{role:"user",message:query}]
+    setChats((prev) => {
+      return [...prev, { role: "user", message: query }];
     });
-    
-    socketRef.current.emit("user_query",{query,topic});
+    setWait(true);
+    socketRef.current.emit("user_query", { query, topic });
     setQuery("");
-  }
+  };
 
   useEffect(() => {
     fetchPrevChats();
 
-    socketRef.current = io("http://localhost:3000",{
+    socketRef.current = io("http://localhost:3000", {
       withCredentials: true,
     });
 
+    socketRef.current.emit("chat_init", { topic });
 
-    socketRef.current.emit("chat_init",{topic});
+    socketRef.current.on("llm_response", (msg) => {
+      setWait(false);
+      setChats((prev) => {
+        return [...prev, { role: "bot", message: msg }];
+      });
+    });
 
-
-    socketRef.current.on("llm_response",(msg)=>{
-      setChats((prev)=>{
-        return [...prev,{role:"bot",message:msg}]
-      })
-    })
-
-    return ()=>{
+    return () => {
       socketRef.current.disconnect();
-    }
+    };
   }, [topic]);
 
+  useEffect(() => {
+    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+  }, [chats]);
   return (
     <div className="min-h-screen w-screen flex flex-col items-center ">
       <Header heading={"Ask your Doubts"} />
@@ -127,7 +134,10 @@ export default function Chat() {
             Chat with Course Assistant
           </h1>
           {/*message display */}
-          <div className=" h-100 overflow-x-hidden overflow-y-auto py-2">
+          <div
+            className=" h-100 overflow-x-hidden overflow-y-auto py-2"
+            ref={scrollRef}
+          >
             {chats.length == 0 ? (
               <div className="w-full h-3/4 flex flex-col items-center justify-center gap-1">
                 <RiRobot2Line className="font-bold text-4xl text-blue-300" />
@@ -170,6 +180,10 @@ export default function Chat() {
                 );
               })
             )}
+           {wait && <div className="flex items-center  gap-2 justify-start my-5 pl-3">
+            <RiRobot2Line className="text-blue-600 text-xl" />
+            <p className=" h-3 w-3 rounded-full animate-bounce bg-linear-to-r from-purple-400 via-blue-600 to-cyan-400" ></p>
+            </div>}
           </div>
 
           {/* text box */}
