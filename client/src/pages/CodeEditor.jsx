@@ -1,10 +1,20 @@
 import Header from "../components/Header.jsx";
 import Editor from "@monaco-editor/react";
-import { useState } from "react";
+import { useState, useRef, useContext } from "react";
 import { SiRundeck } from "react-icons/si";
-
+import { LuLoaderCircle } from "react-icons/lu";
+import { GlobalContext } from "../GlobalContext.jsx";
 function CodeEditor() {
+  const outputRef = useRef(null);
+  const { url } = useContext(GlobalContext);
   const language = {
+    c: {
+      language: "c",
+      code: `#include <stdio.h>
+int main() {
+    // Your code here 
+    }`,
+    },
     cpp: {
       language: "cpp",
       code: `#include <iostream>
@@ -35,18 +45,8 @@ console.log("Hello, World!");`,
       code: `# Your Python code here
 print("Hello, World!")`,
     },
-    c: {
-      language: "c",
-      code: `#include <stdio.h>
-
-int main() {
-    // Your code here
-    printf("Hello, World!\\n");
-    return 0;
-}`,
-    },
   };
-
+  const [wait, setWait] = useState(false);
   const [lang, setLanguage] = useState("javascript");
   const [code, setCode] = useState(`// Your JavaScript code here
 console.log("Hello, World!");`);
@@ -54,6 +54,28 @@ console.log("Hello, World!");`);
     const key = e.target.value;
     setLanguage(key);
     setCode(language[key]["code"]);
+  };
+
+  const handleRunCode = async () => {
+    setWait(true);
+    const response = await fetch(`${url}/code/run`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ language: lang, code }),
+      credentials: "include",
+    });
+    const parsedResponse = await response.json();
+    if (response.ok) {
+      console.log("Code executed successfully:", parsedResponse);
+      outputRef.current.innerHTML = `<h1>Output Terminal : </h1> <p> >> ${parsedResponse.stdout}</p><p>${parsedResponse.stderr}</p>`;
+    } else {
+      console.error("Error executing code:", parsedResponse);
+      outputRef.current.innerHTML = `<h1>Output Terminal : </h1> <p><span style={{color:"red"}}>Error</span> : ${parsedResponse.error}</p>`;
+    }
+    setWait(false);
+    outputRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -69,28 +91,43 @@ console.log("Hello, World!");`);
             onChange={handlechange}
           >
             <option value="javascript">Javascript</option>
-            <option value="cpp">Cpp /g++ 14</option>
+            <option value="c">C</option>
+            <option value="cpp">Cpp </option>
             <option value="python">Python</option>
             <option value="java">Java</option>
-            <option value="c">C</option>
           </select>
 
-          <p className="h-full w-fit flex items-center justify-center gap-2 text-white text-md">
-            <SiRundeck />
-            <span>Run Code</span>
-          </p>
+          {wait ? (
+            <div className="h-full w-fit flex items-center justify-center gap-2 text-white text-md">
+              <LuLoaderCircle className="text-white text-2xl animate-spin" />{" "}
+              <p>Executing...</p>{" "}
+            </div>
+          ) : (
+            <p
+              className="h-full w-fit flex items-center justify-center gap-2 text-white text-md"
+              onClick={handleRunCode}
+            >
+              <SiRundeck />
+              <span>Run Code</span>
+            </p>
+          )}
         </div>
 
         {/* Code Editor*/}
 
         <div className="h-150 w-19/20 pt-5">
+          <p className="text-white  text-sm w-full h-fit my-1 text-center">
+            Note* : Please note that the code editor currently does not support
+            standard input (stdin).
+          </p>
+
           <Editor
             height="80vh"
             theme="vs-dark"
             language={lang}
             value={code}
             onChange={(e) => {
-              console.log(code)
+              console.log(code);
               setCode(e);
             }}
           />
@@ -98,9 +135,12 @@ console.log("Hello, World!");`);
 
         {/* Output terminal*/}
 
-        <div className="w-19/20 mb-5 h-50 rounded bg-[#2c2c2c] text-white p-5">
+        <div
+          className="w-19/20 mb-5 h-50 rounded bg-[#2c2c2c] text-white p-5"
+          ref={outputRef}
+        >
           <h1>Output Terminal : </h1>
-          <p> {">>"} Hello world</p>
+          <p> {">>"} </p>
         </div>
       </div>
     </div>

@@ -17,6 +17,7 @@ import Cursor from "./components/Cursor.jsx";
 import Footer from "./components/Footer.jsx";
 import Theory from "./pages/Theory.jsx";
 import VideoModal from "./components/VideoModal.jsx";
+import Setting from "./pages/Setting.jsx";
 
 function App() {
   const { isAuth, url, setIsAuth, ErrorMsg, successMsg, setCurUser } =
@@ -113,6 +114,15 @@ function App() {
             element={
               <ProtectedRoute>
                 <Theory openModelFunction={openModelFunction} />
+              </ProtectedRoute>
+            }
+          />
+
+           <Route
+            path="/setting"
+            element={
+              <ProtectedRoute>
+                <Setting/>
               </ProtectedRoute>
             }
           />

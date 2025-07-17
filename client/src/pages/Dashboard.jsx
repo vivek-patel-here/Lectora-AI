@@ -89,7 +89,7 @@ function Coursecomponent({ lect }) {
       <div onClick={ViewLecture} className="absolute w-9/10 top-0 left-0 h-full  bg-transparent "> </div>
       <MdDelete onClick={deleteLecture} className="absolute z-50 top-5 right-5 text-xl text-red-600 hover:scale-110 hover:shadow-2xl hover:animate-bounce" />
       <div
-        className={`h-15 w-15 text-white font-bold bg-linear-to-r ${color[random]} rounded-xl sm:p-1 grid place-items-center border`}
+        className={`h-15 hidden md:grid w-15 text-white font-bold bg-linear-to-r ${color[random]} rounded-xl sm:p-1  place-items-center border`}
       >
         {lect?.topic[0]}
       </div>
