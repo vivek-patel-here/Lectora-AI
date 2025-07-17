@@ -6,7 +6,7 @@ import { v4 as uuid } from "uuid";
 import { fileURLToPath } from "url";
 import path from "path";
 import { validateReqSchema } from "../middlewares/validateReqSchema.js";
-import { isAuthenticated } from "../middlewares/isAuthenticated.js";
+import { isAuthenticated } from "../middlewares/IsAuthenticated.js";
 import { wrapAsync } from "../middlewares/wrapAsync.js";
 import {judge0CodeRun} from "../controllers/codeRunnerController.js"
 
