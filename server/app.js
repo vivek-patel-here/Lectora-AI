@@ -27,13 +27,13 @@ ConnectToDB()
   });
 
 //loading heavy language images
-loadLanguageImages()
-  .then((result) => {
-    console.log("Language images loaded successfully!");
-  })
-  .catch((err) => {
-    console.error("Error loading language images:", err);
-  });
+// loadLanguageImages()
+//   .then((result) => {
+//     console.log("Language images loaded successfully!");
+//   })
+//   .catch((err) => {
+//     console.error("Error loading language images:", err);
+//   });
 
 //middlewares
 app.use(express.json());

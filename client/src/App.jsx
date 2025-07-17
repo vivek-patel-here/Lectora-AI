@@ -118,14 +118,14 @@ function App() {
             }
           />
 
-           <Route
+           {/* <Route
             path="/setting"
             element={
               <ProtectedRoute>
                 <Setting/>
               </ProtectedRoute>
             }
-          />
+          /> */}
 
           <Route path="*" element={<Pagenotfound />} />
         </Routes>

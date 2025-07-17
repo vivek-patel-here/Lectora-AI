@@ -78,14 +78,14 @@ export default function Sidebar() {
               <RiGeminiFill /> Ask Doubt
             </Link>
           </li>
-          <li className="hover:bg-[#0000000e] p-1 rounded-md w-19/20" onClick={()=>setSidebarOpen(false)}>
+          {/* <li className="hover:bg-[#0000000e] p-1 rounded-md w-19/20" onClick={()=>setSidebarOpen(false)}>
             <Link
               to="/setting"
               className="flex items-center gap-5  text-[#000000ca] text-md"
             >
               <IoSettingsSharp /> Setting
             </Link>
-          </li>
+          </li> */}
           <button
             onClick={LogoutUser}
             className="flex items-center gap-5 hover:bg-[#0000000e] p-1 rounded-md w-19/20 text-[#000000ca] text-md"

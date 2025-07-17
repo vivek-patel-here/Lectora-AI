@@ -58,7 +58,7 @@ console.log("Hello, World!");`);
 
   const handleRunCode = async () => {
     setWait(true);
-    const response = await fetch(`${url}/code/run`, {
+    const response = await fetch(`${url}/code/exec`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -69,7 +69,7 @@ console.log("Hello, World!");`);
     const parsedResponse = await response.json();
     if (response.ok) {
       console.log("Code executed successfully:", parsedResponse);
-      outputRef.current.innerHTML = `<h1>Output Terminal : </h1> <p> >> ${parsedResponse.stdout}</p><p>${parsedResponse.stderr}</p>`;
+      outputRef.current.innerHTML = `<h1>Output Terminal : </h1> <p> >> ${parsedResponse.stdout? parsedResponse.stdout : ""}</p><p>${parsedResponse.stderr ? parsedResponse.stderr:""}</p>`;
     } else {
       console.error("Error executing code:", parsedResponse);
       outputRef.current.innerHTML = `<h1>Output Terminal : </h1> <p><span style={{color:"red"}}>Error</span> : ${parsedResponse.error}</p>`;

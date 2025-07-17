@@ -11,7 +11,7 @@ function ProfileSetting() {
       </div>
        <div>
         <p>Email Address</p>
-        <input type="text" disabled val />
+        <input type="text" disabled value="" />
        </div>
     </div>
   );
