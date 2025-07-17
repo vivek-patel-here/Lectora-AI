@@ -6,7 +6,8 @@ export const GlobalContext = createContext();
 
 const GlobalContextProvider = ({ children }) => {
   const [isAuth, setIsAuth] = useState(false);
-  const url = "http://localhost:3000";
+  // const url = "http://localhost:3000";
+  const url ="https://lectora-ai-web-server.onrender.com";
   const ErrorMsg = (msg) => {
     return toast.error(msg, {
       position: "top-right",

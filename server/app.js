@@ -41,7 +41,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
   CORS({
-    origin: "http://localhost:5173",
+    origin: "https://lectora-ai.onrender.com",
     credentials: true,
   })
 );

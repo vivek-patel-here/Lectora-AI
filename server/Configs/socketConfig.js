@@ -10,7 +10,7 @@ export const connectToSocket = (server) => {
   const chatHistory = {};
   const io = new Server(server, {
     cors: {
-      origin: "http://localhost:5173",
+      origin: "https://lectora-ai.onrender.com",
       credentials: true,
     },
   });
