@@ -6,7 +6,7 @@ const navigate =useNavigate();
 
   return (
     <div className="w-screen min-h-screen p-8 gap-4 bg-linear-to-br from-cyan-100 via-white to-purple-200 flex flex-col items-center justify-center">
-      <p className=" rounded-full bg-white py-2 px-5 border-[#6f00ff62] border text-[#6f00ff] font-semibold flex justify-around items-center gap-2">
+      <p className=" rounded-full bg-white w-screen sm:w-fit py-2 px-5 border-[#6f00ff62] border text-[#6f00ff] font-semibold flex justify-center items-center gap-2">
         <RiGeminiFill /> Powered By Advanced AI Technology
       </p>
       <h1 className="h-6/10 w-19/20 md:w-7/10 text-[#202020] text-5xl/tight md:text-7xl/tight text-center font-bold ">
@@ -29,7 +29,7 @@ const navigate =useNavigate();
       </div>
 
       <div className="h-fit w-19/20 md:8/10 flex items-center justify-center gap-5 flex-wrap flex-col md:flex-row"> 
-      <div className="text-center w-1/5">
+      <div className="text-center w-full sm:w-1/5  my-10 sm:my-2">
         <h1 className="w-full text-4xl/relaxed font-bold text-purple-600">50,000+</h1>
         <p className="w-full text-xl font-semibold">Courses Generated</p>
       </div>

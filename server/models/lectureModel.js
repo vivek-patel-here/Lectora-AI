@@ -64,4 +64,4 @@ const LectureSchema = new Schema(
   { timestamps: true }
 );
 
-export const Lecture = mongoose.model("Lecture", LectureSchema);
+export const Lecture = mongoose.models.Lecture || mongoose.model("Lecture", LectureSchema);

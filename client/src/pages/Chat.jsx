@@ -3,6 +3,7 @@ import Header from "../components/Header.jsx";
 import { RiRobot2Line } from "react-icons/ri";
 import { TiUserOutline } from "react-icons/ti";
 import { GlobalContext } from "../GlobalContext.jsx";
+import clsx from "clsx";
 
 //io connection
 import { io } from "socket.io-client";
@@ -10,7 +11,7 @@ import { io } from "socket.io-client";
 export default function Chat() {
   const socketRef = useRef(null);
   const [query, setQuery] = useState("");
-  const { allLecture, url, ErrorMsg } = useContext(GlobalContext);
+  const { allLecture, url, mode} = useContext(GlobalContext);
   const [chats, setChats] = useState([]);
   const [topic, setTopic] = useState("General Query");
   const [wait, setWait] = useState(false);
@@ -48,6 +49,8 @@ export default function Chat() {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+    if( query.trim() === "") return ;
+    if(wait) return;
     setChats((prev) => {
       return [...prev, { role: "user", message: query }];
     });
@@ -59,7 +62,7 @@ export default function Chat() {
   useEffect(() => {
     fetchPrevChats();
 
-    socketRef.current = io("http://localhost:3000", {
+    socketRef.current = io(`${url}`, {
       withCredentials: true,
     });
 
@@ -81,9 +84,9 @@ export default function Chat() {
     scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [chats]);
   return (
-    <div className="min-h-screen w-screen flex flex-col items-center ">
+    <div className={clsx("min-h-screen w-screen flex flex-col items-center ",mode===2 && "bg-gray-900")}>
       <Header heading={"Ask your Doubts"} />
-      <h1 className="flex pt-5  w-full justify-center items-center gap-3 font-bold text-3xl">
+      <h1 className={clsx("flex pt-5  w-full justify-center items-center gap-3 font-bold text-3xl",mode===2?"text-gray-200":"text-gray-950")}>
         {" "}
         <RiRobot2Line className="text-blue-500" /> Course Assistant
       </h1>
@@ -91,11 +94,11 @@ export default function Chat() {
         Ask Questions about your courses and get instant help
       </p>
       <div className="w-screen h-fit   flex flex-col lg:flex-row items-center lg:items-start justify-center gap-3 lg:gap-3 pb-5">
-        <div className="w-19/20 lg:w-1/6 h-fit flex flex-col p-2 gap-2 lg:gap-0 items-center justify-around  lg:h-80 border lg:rounded bg-white border-gray-300">
+        <div className={clsx("w-19/20 lg:w-1/6 h-fit flex flex-col p-2 gap-2 lg:gap-0 items-center justify-around  lg:h-80 border lg:rounded ",mode===2?"bg-gray-900 border-gray-700 text-gray-300":"bg-white border-gray-300")}>
           <h1 className="font-semibold w-full pl-3 text-xl">Select Course</h1>
           <select
             name="course"
-            className="w-18/20 pl-3 p-1 rounded border-gray-300 border outline-0"
+            className={clsx("w-18/20 pl-3 p-1 rounded border-gray-300 border outline-0 ",mode===2?"bg-gray-900 text-gray-300":"bg-white text-gray-950")}
             onChange={topicChangeHandler}
           >
             <option value="General Query">General Query</option>
@@ -129,8 +132,8 @@ export default function Chat() {
           </div>
         </div>
 
-        <div className="w-19/20 lg:w-3/6 h-fit lg:h-9/10 border lg:rounded bg-white border-gray-300">
-          <h1 className="w-full p-4 text-2xl font-semibold">
+        <div className={clsx("w-19/20 lg:w-3/6 h-fit lg:h-9/10 border lg:rounded ",mode===2?"bg-gray-900 border-gray-700":"bg-white border-gray-300")}>
+          <h1 className={clsx("w-full p-4 text-2xl font-semibold",mode===2?"text-gray-200":"text-gray-950")}>
             Chat with Course Assistant
           </h1>
           {/*message display */}
@@ -166,9 +169,9 @@ export default function Chat() {
                     )}
                     <p
                       className={
-                        chat?.role == "user"
-                          ? " max-w-3/4  py-1 px-2 rounded bg-blue-600 text-white text-sm"
-                          : " bg-gray-200 max-w-3/4   py-1 px-2 rounded text-sm "
+                        clsx(chat?.role == "user"
+                          ? "max-w-3/4  py-1 px-2 rounded bg-blue-600 text-white text-sm"
+                          : " bg-gray-200 max-w-3/4   py-1 px-2 rounded text-sm ")
                       }
                     >
                       {chat.message}
@@ -189,7 +192,7 @@ export default function Chat() {
           {/* text box */}
           <form
             onSubmit={onSubmitHandler}
-            className="border-t border-gray-300 h-15 flex items-center gap-2 justify-center"
+            className={clsx("border-t  h-15 flex items-center gap-2 justify-center",mode===2?"border-gray-700":"border-gray-300")}
           >
             <input
               type="text"
@@ -197,10 +200,10 @@ export default function Chat() {
               onChange={(e) => {
                 setQuery(e.target.value);
               }}
-              className="text-md text-gray-700 pl-3 border w-8/10 p-1 rounded outline-0 border-gray-300"
+              className={clsx("text-md  pl-3 border w-8/10 p-1 rounded outline-0 ",mode===2?"border-gray-700 text-gray-200":"border-gray-300 text-gray-700")}
               placeholder="Ask a question about the course..."
             />
-            <button className="border w-1/10 p-1 rounded border-gray-300 hover:bg-linear-to-r hover:from-cyan-300 hover:via-blue-500 hover:to-purple-600 hover:text-white">
+            <button className={clsx("border w-1/10 p-1 rounded  hover:bg-linear-to-r hover:from-cyan-300 hover:via-blue-500 hover:to-purple-600 hover:text-white",mode===2?"border-gray-700 text-gray-300":"border-gray-300")}>
               Send
             </button>
           </form>

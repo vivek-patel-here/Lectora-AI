@@ -17,6 +17,7 @@
     "@mui/material": "^7.2.0",
     "@react-oauth/google": "^0.12.2",
     "@tailwindcss/vite": "^4.1.10",
+    "clsx": "^2.1.1",
     "marked": "^16.0.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

@@ -5,7 +5,7 @@ import { TfiClose } from "react-icons/tfi";
 
 function OtpModal({handleSubmit,otp,setOtp,setShowModal}) {
   return (
-    <div className=" h-screen w-screen absolute bg-[#000000be] grid place-items-center">
+    <div className=" h-screen w-screen absolute bg-[#000000f1] grid place-items-center">
           <TfiClose
             className="absolute top-10 right-10 cursor-pointer"
             onClick={() => setShowModal(false)}
@@ -14,7 +14,7 @@ function OtpModal({handleSubmit,otp,setOtp,setShowModal}) {
             onSubmit={handleSubmit}
             className="bg-transparent  rounded-2xl h-1/2 w-full grid place-items-center"
           >
-            <h1 className="text-2xl">Enter OTP below</h1>
+            <h1 className="text-2xl text-white">Enter OTP below</h1>
             <OtpInput
               value={otp}
               onChange={setOtp}
@@ -32,7 +32,7 @@ function OtpModal({handleSubmit,otp,setOtp,setShowModal}) {
             >
               Submit &rarr;
             </button>
-            <p>*Please check your Spam folder. If found there, click 'Not Spam' to receive future OTPs directly in Inbox.</p>
+            <p className='text-white'><span className='text-orange-600'>*</span>Please check your Spam folder. If found there, click 'Not Spam' to receive future OTPs directly in Inbox.</p>
           </form>
         </div>
   )

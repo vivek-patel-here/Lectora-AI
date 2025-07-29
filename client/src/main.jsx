@@ -10,7 +10,6 @@ createRoot(document.getElementById("root")).render(
   <GlobalContextProvider>
     <BrowserRouter>
       <StrictMode>
-        
         <App />
       </StrictMode>
     </BrowserRouter>

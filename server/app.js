@@ -9,6 +9,7 @@ import OtpRoute from "./Routes/OtpRoute.js";
 import LectureRoute from "./Routes/LectureRoute.js";
 import codeRoute from "./Routes/CodeRunnerRoute.js";
 import ChatRoute from "./Routes/ChatRoute.js";
+import UtilityRoute from "./Routes/Utility.js"
 import { createServer } from "node:http";
 import { connectToSocket } from "./Configs/socketConfig.js";
 import { loadLanguageImages } from "./Configs/loadLanguageImages.js";
@@ -41,7 +42,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
   CORS({
-    origin: "https://lectora-ai.onrender.com",
+    // origin: "https://lectora-ai.onrender.com",
+    origin :"http://localhost:5173",
     credentials: true,
   })
 );
@@ -52,6 +54,7 @@ app.use("/otp", OtpRoute);
 app.use("/code", codeRoute);
 app.use("/lecture", LectureRoute);
 app.use("/chat", ChatRoute);
+app.use("/util",UtilityRoute);
 
 //error handler
 app.use((err, req, res, next) => {

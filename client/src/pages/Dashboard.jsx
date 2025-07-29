@@ -11,6 +11,7 @@ import { MdDelete } from "react-icons/md";
 import { FaFire } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import { FaCode } from "react-icons/fa";
+import clsx from "clsx";
 
 
 
@@ -30,6 +31,7 @@ function Coursecomponent({ lect }) {
     ErrorMsg,
     url,
     GetUserLectures,
+    mode
   } = useContext(GlobalContext);
 
   const navigate = useNavigate();
@@ -85,11 +87,11 @@ function Coursecomponent({ lect }) {
 
   return (
     <div
-      className="h-30 relative pl-1 lg:pl-5 hover:shadow-xl overflow-hidden border border-gray-200 gap-6 flex items-center my-5 rounded-xl" >
+      className={clsx("h-30 relative pl-1 lg:pl-5 hover:shadow-xl overflow-hidden border  gap-6 flex items-center my-5 rounded-xl",mode===2?"border-gray-800 shadow-gray-950":"border-gray-200")} >
       <div onClick={ViewLecture} className="absolute w-9/10 top-0 left-0 h-full  bg-transparent "> </div>
-      <MdDelete onClick={deleteLecture} className="absolute z-50 top-5 right-5 text-xl text-red-600 hover:scale-110 hover:shadow-2xl hover:animate-bounce" />
+      <MdDelete onClick={deleteLecture} className="absolute z-50 top-5 right-5 text-xl text-red-500 hover:scale-110 hover:shadow-2xl hover:animate-bounce" />
       <div
-        className={`h-15 hidden md:grid w-15 text-white font-bold bg-linear-to-r ${color[random]} rounded-xl sm:p-1  place-items-center border`}
+        className={`h-15 hidden md:grid w-15 text-white font-bold bg-linear-to-r ${color[random]} rounded-xl sm:p-1  place-items-center `}
       >
         {lect?.topic[0]}
       </div>
@@ -140,7 +142,7 @@ function Coursecomponent({ lect }) {
 }
 
 function Dashboard() {
-  const { allLecture,GetUserLectures, } = useContext(GlobalContext);
+  const { allLecture,GetUserLectures,mode } = useContext(GlobalContext);
 
   const countThisMonth = () => {
     let curDate = new Date();
@@ -161,44 +163,44 @@ function Dashboard() {
     GetUserLectures();
   },[])
   return (
-    <div className="min-h-screen  w-screen flex flex-col items-center">
+    <div className={clsx("min-h-screen  w-screen flex flex-col items-center",mode===2 && "bg-gray-900")}>
       <Header heading={"Dashboard"} />
-      <p className="py-4 w-19/20 text-[#010102c9] text-md">
+      <p className={clsx("py-4 w-19/20  text-md",mode===2?"text-gray-200":"text-[#010102c9]")}>
         Welcome back! Here's an overview of what has been accomplished so far.
       </p>
 
-      <div className="w-19/20 flex flex-wrap h-fit gap-5 p-1 items-center justify-between">
-        <div className="flex relative flex-col  pt-3 pl-5 gap-3 h-40 rounded-xl w-60 border border-gray-200 hover:shadow-xl transition-all">
-          <h1 className="font-semibold text-md text-gray-600">Total Courses</h1>
-          <h1 className="font-bold text-4xl ">{allLecture.length}</h1>
-          <p className="text-gray-500">+ {countThisMonth()} this month</p>
+      <div className="sm:w-19/20 w-full flex flex-wrap h-fit gap-5 p-1 items-center justify-between">
+        <div className={clsx("flex relative flex-col ml-1 w-19/20 sm:w-60 pt-3 pl-5 gap-3 h-40 rounded-xl  border  hover:shadow-xl transition-all",mode===2?"border-gray-800 shadow-gray-950":"border-gray-200")}>
+          <h1 className={clsx("font-semibold text-md ",mode===2?"text-gray-300":"text-gray-600")}>Total Courses</h1>
+          <h1 className={clsx("font-bold text-4xl ",mode===2?"text-white":"text-gray-950")}>{allLecture.length}</h1>
+          <p className={clsx(mode===2?"text-gray-200":"text-gray-500")}>+ {countThisMonth()} this month</p>
           <div className="absolute top-4 right-4  p-2 rounded-xl bg-blue-100 grid place-items-center">
             <FaBook className="text-4xl text-blue-600" />
           </div>
         </div>
 
-        <div className="flex relative flex-col  pt-3 pl-5 gap-3 h-40 rounded-xl w-60 border border-gray-200 hover:shadow-xl transition-all">
-          <h1 className="font-semibold text-md text-gray-600">Daily Streak</h1>
-          <h1 className="font-bold text-4xl ">{3}- day</h1>
-          <p className="text-gray-500">Learning Streak</p>
+        <div className={clsx("flex relative flex-col ml-1 w-19/20 sm:w-60 pt-3 pl-5 gap-3 h-40 rounded-xl  border  hover:shadow-xl transition-all",mode===2?"border-gray-800 shadow-gray-950":"border-gray-200")}>
+          <h1 className={clsx("font-semibold text-md ",mode===2?"text-gray-300":"text-gray-600")}>Daily Streak</h1>
+          <h1 className={clsx("font-bold text-4xl ",mode===2?"text-white":"text-gray-950")}>{1}- day</h1>
+          <p className={clsx(mode===2?"text-gray-200":"text-gray-500")}>Learning Streak</p>
           <div className="absolute top-4 right-4  p-2 rounded-xl bg-yellow-100 grid place-items-center">
             <FaFire className="text-4xl text-orange-400" />
           </div>
         </div>
 
-        <div className="flex relative flex-col  pt-3 pl-5 gap-3 h-40 rounded-xl w-60 border border-gray-200 hover:shadow-xl transition-all">
-          <h1 className="font-semibold text-md text-gray-600">Total Active Users</h1>
-          <h1 className="font-bold text-4xl ">50k+</h1>
-          <p className="text-gray-500">+ 2500 this month</p>
+        <div className={clsx("flex relative flex-col ml-1 w-19/20 sm:w-60 pt-3 pl-5 gap-3 h-40 rounded-xl  border  hover:shadow-xl transition-all",mode===2?"border-gray-800 shadow-gray-950":"border-gray-200")}>
+          <h1 className={clsx("font-semibold text-md ",mode===2?"text-gray-300":"text-gray-600")}>Total Active Users</h1>
+          <h1 className={clsx("font-bold text-4xl ",mode===2?"text-white":"text-gray-950")}>50k+</h1>
+          <p className={clsx(mode===2?"text-gray-200":"text-gray-500")}>+ 2500 this month</p>
           <div className="absolute top-4 right-4  p-2 rounded-xl bg-green-100 grid place-items-center">
             <FaUser className="text-4xl text-green-600" />
           </div>
         </div>
 
-        <div className="flex relative flex-col  pt-3 pl-5 gap-3 h-40 rounded-xl w-60 border border-gray-200 hover:shadow-xl transition-all">
-          <h1 className="font-semibold text-md text-gray-600">Code</h1>
-          <h1 className="font-bold text-3xl ">10k+ lines</h1>
-          <p className="text-gray-500">Practice brings perfection</p>
+        <div className={clsx("flex relative flex-col ml-1 w-19/20 sm:w-60 pt-3 pl-5 gap-3 h-40 rounded-xl  border  hover:shadow-xl transition-all",mode===2?"border-gray-800 shadow-gray-950":"border-gray-200")}>
+          <h1 className={clsx("font-semibold text-md ",mode===2?"text-gray-300":"text-gray-600")}>Code</h1>
+          <h1 className={clsx("font-bold text-4xl ",mode===2?"text-white":"text-gray-950")}>10k+ </h1>
+          <p className={clsx(mode===2?"text-gray-200":"text-gray-500")}>lines of code</p>
           <div className="absolute top-4 right-4  p-2 rounded-xl bg-red-100 grid place-items-center">
             <FaCode className="text-4xl text-red-600" />
           </div>
@@ -206,12 +208,12 @@ function Dashboard() {
 
       </div>
 
-      <div className="h-fit border  border-gray-200 w-19/20 py-2 px-5 shadow-2xl my-4 rounded  gap-5">
-        <h1 className="h-20 flex flex-col  bg-white w-full justify-center text-3xl font-semibold">
+      <div className={clsx("h-fit border   w-19/20 py-2 px-5 shadow-2xl my-4 rounded  gap-5",mode===2?"border-gray-800":"border-gray-200")}>
+        <h1 className={clsx("h-20 flex flex-col   w-full justify-center text-3xl font-semibold",mode===2?"bg-gray-900 text-gray-300":"bg-white text-gray-950")}>
           Recent Courses.
         </h1>
-        <div className="overflow-y-auto h-100 w-full md:w-full">
-          {allLecture.length===0 && <p>No Courses yet! <span className="text-blue-600" onClick={()=>navigate("/create")}>Create</span> Lecture</p>}
+        <div className={clsx("overflow-y-auto h-100 w-full md:w-full",mode===2 && "text-gray-300")}>
+          {allLecture.length===0 && <p>No Courses yet! <span className="text-blue-600 hover:underline" onClick={()=>navigate("/create")}>Create</span> Lecture</p>}
           {allLecture?.map((lect) => {
             return <Coursecomponent key={lect._id} lect={lect} />;
           })}

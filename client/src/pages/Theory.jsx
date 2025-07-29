@@ -44,14 +44,13 @@ function Theory({ openModelFunction }) {
           <h1 className="w-full text-2xl font-semibold">{topic}</h1>
           {!wait ? (
             <button
-              className="border flex items-center w-fit h-fit py-1 px-2 rounded-lg "
+              className="border flex items-center w-25 justify-center h-fit py-1 px-1 rounded-2xl text-sm text-white bg-purple-600"
               onClick={handleDowload}
             >
               <RxDownload /> Notes
             </button>
           ) : (
-            <div className="w-fit h-fit pb-1 bg-linear-to-r from-green-500 via-green-200">
-              <p className="w-fit h-fit bg-white">Downloading...</p>
+            <div id="download-loader">
             </div>
           )}
         </div>
@@ -156,7 +155,7 @@ function Theory({ openModelFunction }) {
               })}
               {!isSubmitted && (
                 <button
-                  className="h-fit w-fit py-1 px-3 font-bold  rounded-xl border"
+                  className="h-fit w-20 border-pruple-600 text-purple-600 text-sm py-1 rounded-2xl border"
                   onClick={() => setIsSubmitted(true)}
                 >
                   {" "}

@@ -6,8 +6,8 @@ export const GlobalContext = createContext();
 
 const GlobalContextProvider = ({ children }) => {
   const [isAuth, setIsAuth] = useState(false);
-  // const url = "http://localhost:3000";
-  const url ="https://lectora-ai-web-server.onrender.com";
+  const url = "http://localhost:3000";
+  // const url ="https://lectora-ai-web-server.onrender.com";
   const ErrorMsg = (msg) => {
     return toast.error(msg, {
       position: "top-right",
@@ -38,8 +38,8 @@ const GlobalContextProvider = ({ children }) => {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [curUser, setCurUser] = useState("");
-
-  const [mode, setMode] = useState(0); //0 ->light &&   1 -> dark
+  const [spinner, setSpinner] = useState(false); // true -> spinner is visible, false -> spinner is hidden
+  const [mode, setMode] = useState(1); //1 ->light &&   2 -> dark && 3 -> auto
 
   const [topic, setTopic] = useState("");
   const [theory, setTheory] = useState("");
@@ -85,25 +85,33 @@ const GlobalContextProvider = ({ children }) => {
   };
 
   const LogoutUser = async () => {
-    const response = await fetch(`${url}/auth/log-out`, {
-      method: "GET",
-      headers: {
-        "content-type": "apllication/json",
-      },
-      credentials: "include",
-    });
+    setSpinner(true);
+    try {
+      const response = await fetch(`${url}/auth/log-out`, {
+        method: "GET",
+        headers: {
+          "content-type": "apllication/json",
+        },
+        credentials: "include",
+      });
 
-    const parsedResponse = await response.json();
+      const parsedResponse = await response.json();
 
-    if (!parsedResponse.success) return ErrorMsg(parsedResponse.message);
-    setIsAuth(false);
-    navigate("/");
-    setCurUser("");
-    setSidebarOpen(false);
-    return successMsg("Logout Successful!");
+      if (!parsedResponse.success) return ErrorMsg(parsedResponse.message);
+      setIsAuth(false);
+      navigate("/");
+      setCurUser("");
+      setSidebarOpen(false);
+      return successMsg("Logout Successful!");
+    } catch (err) {
+      return ErrorMsg("Unable to Logout!");
+    } finally {
+      setSpinner(false);
+    }
   };
 
   const IsUserLogin = async () => {
+    setSpinner(true);
     try {
       const response = await fetch(`${url}/auth/verify`, {
         method: "GET",
@@ -116,10 +124,13 @@ const GlobalContextProvider = ({ children }) => {
       const parsedResponse = await response.json();
       if (!parsedResponse.success) return;
       setIsAuth(true);
+      setMode(parsedResponse.mode);
       setCurUser(parsedResponse.curUser);
       navigate("/");
     } catch (err) {
       return;
+    } finally {
+      setSpinner(false);
     }
   };
 
@@ -180,7 +191,9 @@ const GlobalContextProvider = ({ children }) => {
         setYoutubeIds,
         setExercise,
         setQuizzes,
-        GetUserLectures
+        GetUserLectures,
+        spinner,
+        setSpinner,
       }}
     >
       {children}

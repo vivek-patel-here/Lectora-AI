@@ -8,3 +8,68 @@
 *::-webkit-scrollbar{
     display: none;
 }
+
+
+#global-spinner-loader{
+    display: block;
+    position: relative;
+    height:50px;
+    width: 200px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  #global-spinner-loader:before{
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 4px;
+    width: 30px;
+    height: 30px;
+    animation: ballbns 2s ease-in-out infinite;
+  }
+  
+  @keyframes ballbns {
+    0% {  
+      left: 0; 
+      transform: translateX(-100%) rotate(0deg);
+      border-radius: 5px; 
+    background-color: white;
+    }
+    100% {  
+      left: 100%; 
+      transform: translateX(0%) rotate(360deg); 
+      border-radius: 50%;
+      background-color: white; 
+    }
+  } 
+
+
+#download-loader {
+  height: 9px;
+  width: 80px;
+  --c:no-repeat linear-gradient(#00ff9d 0 0);
+  background: var(--c), var(--c), var(--c), var(--c);
+  background-size: 26% 3px;
+  animation: l2 1s infinite;
+  position:relative;
+}
+
+#download-loader::before{
+  content:"Downloading...";
+  position: absolute;
+  top:-15px;
+  left:0px;
+  font-size: 12px;
+
+}
+
+@keyframes l2 {
+  0%,
+  70%,
+  100% {background-position: calc(0*100%/3) 100%,calc(1*100%/3) 100%,calc(2*100%/3) 100%,calc(3*100%/3) 100%}
+  14%  {background-position: calc(0*100%/3) 0   ,calc(1*100%/3) 100%,calc(2*100%/3) 100%,calc(3*100%/3) 100%}
+  28%  {background-position: calc(0*100%/3) 100%,calc(1*100%/3) 0   ,calc(2*100%/3) 100%,calc(3*100%/3) 100%}
+  42%  {background-position: calc(0*100%/3) 100%,calc(1*100%/3) 100%,calc(2*100%/3) 0   ,calc(3*100%/3) 100%}
+  56%  {background-position: calc(0*100%/3) 100%,calc(1*100%/3) 100%,calc(2*100%/3) 100%,calc(3*100%/3) 0   }
+}
+  

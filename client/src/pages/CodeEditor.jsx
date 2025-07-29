@@ -4,9 +4,10 @@ import { useState, useRef, useContext } from "react";
 import { SiRundeck } from "react-icons/si";
 import { LuLoaderCircle } from "react-icons/lu";
 import { GlobalContext } from "../GlobalContext.jsx";
+import clsx from "clsx";
 function CodeEditor() {
   const outputRef = useRef(null);
-  const { url } = useContext(GlobalContext);
+  const { url ,mode} = useContext(GlobalContext);
   const language = {
     c: {
       language: "c",
@@ -81,7 +82,7 @@ console.log("Hello, World!");`);
   return (
     <div className="w-full  h-fit">
       <Header heading={"Code Editor"} />
-      <div className="h-fit w-full bg-[#1d1d1d] flex flex-col items-center ">
+      <div className={clsx("h-fit w-full  flex flex-col items-center ",mode===2?"bg-[#1d1d1d]":"bg-white")}>
         {/* code run and language select option */}
         <div className=" w-full h-10 flex items-center justify-between px-10">
           <select
@@ -98,13 +99,13 @@ console.log("Hello, World!");`);
           </select>
 
           {wait ? (
-            <div className="h-full w-fit flex items-center justify-center gap-2 text-white text-md">
-              <LuLoaderCircle className="text-white text-2xl animate-spin" />{" "}
+            <div className={clsx("h-full w-fit flex items-center justify-center gap-2  text-md",code===2?"text-white":"text-gray-800")}>
+              <LuLoaderCircle className={clsx(" text-2xl animate-spin",mode===2?"text-white":"text-gray-800")} />{" "}
               <p>Executing...</p>{" "}
             </div>
           ) : (
             <p
-              className="h-full w-fit flex items-center justify-center gap-2 text-white text-md"
+              className={clsx("h-full w-fit flex items-center justify-center gap-2  text-md",mode===2?"text-white":"text-gray-800")}
               onClick={handleRunCode}
             >
               <SiRundeck />
@@ -116,14 +117,14 @@ console.log("Hello, World!");`);
         {/* Code Editor*/}
 
         <div className="h-150 w-19/20 pt-5">
-          <p className="text-white  text-sm w-full h-fit my-1 text-center">
+          <p className={clsx("  text-sm w-full h-fit my-1 text-center",mode===2?"text-white":"text-gray-700")}>
             Note* : Please note that the code editor currently does not support
             standard input (stdin).
           </p>
 
           <Editor
             height="80vh"
-            theme="vs-dark"
+            theme={mode===2?"vs-dark":"vs-light"}
             language={lang}
             value={code}
             onChange={(e) => {
@@ -136,7 +137,7 @@ console.log("Hello, World!");`);
         {/* Output terminal*/}
 
         <div
-          className="w-19/20 mb-5 h-50 rounded bg-[#2c2c2c] text-white p-5"
+          className={clsx("w-19/20 mb-5 h-50 rounded p-5",mode===2?"bg-[#2c2c2c] text-white ":"bg-gray-300 text-gray-800")}
           ref={outputRef}
         >
           <h1>Output Terminal : </h1>

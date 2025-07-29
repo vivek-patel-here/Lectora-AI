@@ -18,9 +18,10 @@ import Footer from "./components/Footer.jsx";
 import Theory from "./pages/Theory.jsx";
 import VideoModal from "./components/VideoModal.jsx";
 import Setting from "./pages/Setting.jsx";
+import GlobalSpinner from "./components/GlobalSpinner.jsx";
 
 function App() {
-  const { isAuth, url, setIsAuth, ErrorMsg, successMsg, setCurUser } =
+  const { isAuth, spinner, setSpinner, mode, setMode } =
     useContext(GlobalContext);
   const navigate = useNavigate();
 
@@ -38,6 +39,15 @@ function App() {
     setOpen(true);
   };
 
+  useEffect(() => {
+    if (mode == 3) {
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        return setMode(2);
+      }
+      return setMode(1);
+    }
+  }, [isAuth]);
+
   return (
     <>
       <div
@@ -45,8 +55,10 @@ function App() {
         onMouseMove={changeCoordinate}
       >
         {open && <VideoModal vid={vid} open={open} setOpen={setOpen} />}
+        {spinner && <GlobalSpinner />}
         {isAuth && <Sidebar />}
         {/*my custom cursor */}
+
         <Cursor positionX={positionX} positionY={positionY} />
 
         <Routes>
@@ -60,6 +72,7 @@ function App() {
             element={
               <PublicRoute>
                 <Auth />
+                {/* <Setting/> */}
               </PublicRoute>
             }
           />
@@ -118,18 +131,18 @@ function App() {
             }
           />
 
-           {/* <Route
+          <Route
             path="/setting"
             element={
               <ProtectedRoute>
-                <Setting/>
+                <Setting />
               </ProtectedRoute>
             }
-          /> */}
+          />
 
           <Route path="*" element={<Pagenotfound />} />
         </Routes>
-        {isAuth && <Footer />}
+        {isAuth && !spinner && <Footer />}
       </div>
 
       <ToastContainer

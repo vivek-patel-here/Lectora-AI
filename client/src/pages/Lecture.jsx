@@ -7,8 +7,9 @@ import { SpinnerDotted } from "spinners-react";
 import { TbBinaryTree } from "react-icons/tb";
 import { BiLogoKubernetes } from "react-icons/bi";
 import { TbCloudComputing } from "react-icons/tb";
+import clsx from "clsx";
 
-function Examplecard({ text, index, handleInput }) {
+function Examplecard({ text, index, handleInput ,mode}) {
   const icons = [
     <TbBinaryTree className="text-4xl text-orange-400" />,
     <BiLogoKubernetes className="text-4xl text-blue-600" />,
@@ -18,10 +19,10 @@ function Examplecard({ text, index, handleInput }) {
 
   return (
     <div
-      className="flex relative flex-col items-center justify-center py-3 px-5 gap-3 h-40 rounded-xl w-8/10 sm:w-60 border border-gray-200 hover:shadow-xl transition-all"
+      className="flex relative flex-col items-center justify-center py-3 px-5 gap-3 h-40 rounded-xl w-9/10 sm:w-60 border border-gray-200 hover:shadow-xl transition-all"
       onClick={() => handleInput(text)}
     >
-      <p className="text-gray-700">{text}</p>
+      <p className={mode===2?"text-gray-300":"text-gray-700"}>{text}</p>
       <div
         className={`absolute top-1 right-1  p-1 rounded-xl ${color[index]} grid place-items-center`}
       >
@@ -38,7 +39,7 @@ const prompt = [
 ];
 
 function Lecture() {
-  const { fetchCourse, ErrorMsg } = useContext(GlobalContext);
+  const { fetchCourse, ErrorMsg ,mode} = useContext(GlobalContext);
   const navigate = useNavigate();
   const [input, handleInput] = useState("");
   const onChangeHandler = (e) => {
@@ -59,29 +60,27 @@ function Lecture() {
   };
 
   return (
-    <div className="min-h-screen w-screen flex flex-col items-center ">
+    <div className={clsx("min-h-screen w-screen flex flex-col items-center ",mode===2?"bg-gray-900":"")}>
       <Header heading={"Create a Lectures"} />
-      <div className="min-h-[90vh] gap-5 w-full flex flex-col  items-center justify-center relative">
-        <div className="absolute top-1/2 left-1/2 -translate-1/2 rounded-full shadow-2xl shadow-cyan-100  h-50 w-6/10 -rotate-65 -z-10 "></div> 
-        <div className="absolute top-1/2 left-1/2 -translate-1/2 rounded-full shadow-2xl shadow-purple-100  h-50 w-6/10 rotate-134 -z-10 "></div> 
-        <h1 className="h-6/10 w-19/20  md:w-7/10 text-[#202020] sm:text-5xl/tight text-3xl text-center font-bold ">
+      <div className="min-h-[90vh] gap-5 w-full mt-10 sm:mt-2 flex flex-col  items-center justify-center relative">
+        <h1 className={clsx("h-6/10 w-19/20  md:w-7/10  sm:text-5xl/tight text-3xl text-center font-bold ",mode===2?"text-gray-200":"text-[#202020]")}>
           Prompt.{" "}
           <span className="bg-linear-to-br from-cyan-400 via-blue-600 to-purple-600  text-[transparent] bg-clip-text">
             Learn.{" "}
           </span>
           Repeat.
         </h1>
-        <p className="text-[#101020ab] text-center text-md font-semibold w-full md:w-fit">
+        <p className={clsx(" text-center text-md font-semibold w-full md:w-fit",mode===2?"text-gray-400":"text-[#101020ab]")}>
           Lectora-AI turns your prompt into a full lecture with theory, code,
           videos, and quizzes—instantly.
         </p>
         <form
-          className="border border-[#10101050] h-40 w-18/20 md:w-9/12 p-4  lg:w-6/10 rounded-2xl"
+          className={clsx("border  h-40 w-18/20 md:w-9/12 p-4  lg:w-6/10 rounded-2xl",mode===2?"border-gray-700 bg-gray-950 text-white":"border-[#10101050]")}
           onSubmit={handleSubmit}
         >
           <textarea
             name=""
-            className="w-full border-0 h-22  outline-0"
+            className={clsx("w-full border-0 h-22  outline-0",mode===2?"text-white ":"")}
             value={input}
             onChange={onChangeHandler}
             placeholder="Ask Lectora to create a course on..."
@@ -102,8 +101,8 @@ function Lecture() {
             )}
           </div>
         </form>
-        <p className="w-6/10 px-5 text-gray-600">Try these prompts -</p>
-        <div className="Example w-full p-1 lg:w-6/10 my-5 h-fit flex flex-wrap gap-5 lg:gap-10 justify-center items-center ">
+        <p className={clsx(" w-18/20 md:w-9/12  lg:w-6/10 ",mode===2?"text-gray-200":"text-gray-600")}>Try these prompts -</p>
+        <div className="Example w-full p-1 lg:w-7/10 h-fit mb-4 flex flex-wrap gap-5 lg:gap-10 justify-center items-center ">
           {prompt.map((pt, i) => {
             return (
               <Examplecard
@@ -111,6 +110,7 @@ function Lecture() {
                 key={i}
                 index={i}
                 handleInput={handleInput}
+                mode={mode}
               />
             );
           })}

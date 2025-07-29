@@ -38,6 +38,7 @@ export const signupController = async (req, res) => {
     isVerifiedEmail: isVerified ? isVerified : false,
     refreshToken: newRefreshToken,
     refreshTokenExpiry: new_refreshTokenExpiry,
+    mode:1
   });
 
   const registeredUser = await newUser.save();
@@ -58,7 +59,7 @@ export const signupController = async (req, res) => {
     secure: true,
     httpOnly: true,
     sameSite: "none",
-    expires: new Date(Date.now() + 15 * 60 * 1000),
+    expires: new Date(Date.now() + 120 * 60 * 1000),
   });
 
   res.cookie("refreshToken", newRefreshToken, {
@@ -69,7 +70,7 @@ export const signupController = async (req, res) => {
     expires: new_refreshTokenExpiry,
   });
 
-  res.status(200).json({ success: true, message: "Sign in Successful!",curUser:username});
+  res.status(200).json({ success: true, message: "Sign in Successful!",curUser:username,mode:registeredUser.mode});
 };
 
 //Login controller
@@ -114,7 +115,7 @@ if (!updatedUser) {
     secure: true,
     httpOnly: true,
     sameSite: "none",
-    expires: new Date(Date.now() + 15 * 60 * 1000),
+    expires: new Date(Date.now() + 120 * 60 * 1000),
   });
 
   res.cookie("refreshToken", newRefreshToken, {
@@ -125,6 +126,6 @@ if (!updatedUser) {
     expires: new_refreshTokenExpiry,
   });
 
-  res.status(200).json({ success: true, message: "Log in Successfull!" , curUser:savedUser.username });
+  res.status(200).json({ success: true, message: "Log in Successfull!" , curUser:savedUser.username , mode:savedUser.mode});
 
 };

@@ -30,6 +30,7 @@ const googleLogin = async (req, res) => {
       isVerifiedEmail: true,
       refreshToken: null,
       refreshTokenExpiry: null,
+      mode:1,
     });
   }
 
@@ -56,7 +57,7 @@ const googleLogin = async (req, res) => {
     secure: true,
     httpOnly: true,
     sameSite: "none",
-    expires: new Date(Date.now() + 15 * 60 * 1000),
+    expires: new Date(Date.now() + 120 * 60 * 1000),
   });
 
   res.cookie("refreshToken", newRefreshToken, {
@@ -67,7 +68,7 @@ const googleLogin = async (req, res) => {
     expires: new_refreshTokenExpiry,
   });
 
-  res.status(200).json({ success: true, message: "User Login Successfully!" ,curUser:name});
+  res.status(200).json({ success: true, message: "User Login Successfully!" ,curUser:name,mode:savedUser.mode});
 };
 
 export default googleLogin;

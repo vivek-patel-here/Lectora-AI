@@ -33,11 +33,12 @@ function Auth() {
 
 function OAuth() {
   const navigate = useNavigate();
-  const { isAuth, setIsAuth, url, ErrorMsg, successMsg ,curUser,setCurUser} =
+  const { isAuth, setIsAuth, url, ErrorMsg, successMsg ,curUser,setCurUser ,setSpinner,setMode} =
     useContext(GlobalContext);
 
   //google login function handlers
   const responseGoogle = async (google_res) => {
+    setSpinner(true);
     try {
       if (google_res["code"]) {
         const response = await fetch(
@@ -55,6 +56,7 @@ function OAuth() {
         if (parsedResponse.success == false) {
           return ErrorMsg(parsedResponse.message);
         }
+        setMode(parsedResponse.mode);
         setIsAuth(true);
         navigate("/");
         setCurUser(parsedResponse.curUser);
@@ -63,6 +65,8 @@ function OAuth() {
     } catch (err) {
       console.log("Something went wrong : ", err);
       return ErrorMsg("Something went wrong . Please try again!");
+    }finally{
+      setSpinner(false);
     }
   };
   //google login function
@@ -93,6 +97,7 @@ function OAuth() {
 
   const handleSignup = async () => {
     try {
+        setSpinner(true);
       if (step == 1) {
         //sending otp to user email
         setTemp(credential);
@@ -103,7 +108,7 @@ function OAuth() {
           credentials:"include"
         });
         const parsedResponse = await response.json();
-
+        setSpinner(false);
         if (!parsedResponse.success) {
           return ErrorMsg(parsedResponse.message);
         }
@@ -113,6 +118,7 @@ function OAuth() {
         return successMsg(parsedResponse.message);
       } else if (step == 2) {
         //after otp is send to user email
+        setSpinner(true);
         if(otp.length<6) return ErrorMsg("Please Enter a valid OTP!");
         const response = await fetch(`${url}/auth/credential/otp/signup`, {
           method: "POST",
@@ -129,6 +135,7 @@ function OAuth() {
         });
 
         const parsedResponse = await response.json();
+        setSpinner(false);
         if (!parsedResponse.success) {
           if (!parsedResponse.endProcess && !parsedResponse.anotherProvider)
             return ErrorMsg(parsedResponse.message);
@@ -151,6 +158,7 @@ function OAuth() {
         setIsAuth(true);
         navigate("/");
         setCurUser(parsedResponse.curUser);
+        setMode(parsedResponse.mode);
         return successMsg(parsedResponse.message);
       }
     } catch (err) {
@@ -159,6 +167,7 @@ function OAuth() {
   };
 
   const handleLogin = async () => {
+    setSpinner(true);
     try{
       const response =await fetch(`${url}/auth/credential/login`,{
         method:"POST",
@@ -174,11 +183,14 @@ function OAuth() {
       if(!parsedResponse.success) return ErrorMsg(parsedResponse.message);
       setIsAuth(true);
       navigate("/");
-        setCurUser(parsedResponse.curUser);
+      setCurUser(parsedResponse.curUser);
+      setMode(parsedResponse.mode);
       return successMsg(parsedResponse.message);
 
     }catch(err){
        return ErrorMsg("Unable to Login! Try again.");
+    }finally{
+      setSpinner(false);
     }
   };
 

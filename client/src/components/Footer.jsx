@@ -1,9 +1,13 @@
 import { FaLinkedin } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
+import { useContext } from "react";
+import { GlobalContext } from "../GlobalContext.jsx";
+import clsx from "clsx";
 
 function Footer() {
+  const { mode } = useContext(GlobalContext);
   return (
-    <div className="h-fit w-screen flex flex-col items-center justify-center gap-4 bg-blue-600 p-4">
+    <div className={clsx("h-fit w-screen flex flex-col items-center justify-center gap-4  p-4",mode===2?"bg-blue-950":"bg-blue-600")}>
       <div className="w-8/10 h-fit flex items-center flex-wrap justify-between text-white">
         <div className="h-full w-full lg:w-3/10 p-4">
           <div className="flex items-center w-full gap-5">
