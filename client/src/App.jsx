@@ -71,8 +71,8 @@ function App() {
             path="/auth"
             element={
               <PublicRoute>
-                <Auth />
-                {/* <Setting/> */}
+                {/* <Auth /> */}
+                <CodeEditor />
               </PublicRoute>
             }
           />

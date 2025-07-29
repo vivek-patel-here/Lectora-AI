@@ -123,7 +123,7 @@ console.log("Hello, World!");`);
           </p>
 
           <Editor
-            height="80vh"
+            height="70vh"
             theme={mode===2?"vs-dark":"vs-light"}
             language={lang}
             value={code}
@@ -137,7 +137,7 @@ console.log("Hello, World!");`);
         {/* Output terminal*/}
 
         <div
-          className={clsx("w-19/20 mb-5 h-50 rounded p-5",mode===2?"bg-[#2c2c2c] text-white ":"bg-gray-300 text-gray-800")}
+          className={clsx("w-19/20 my-5 h-50 rounded p-5",mode===2?"bg-[#2c2c2c] text-white ":"bg-gray-300 text-gray-800")}
           ref={outputRef}
         >
           <h1>Output Terminal : </h1>

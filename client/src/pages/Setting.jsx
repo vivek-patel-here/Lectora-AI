@@ -54,7 +54,7 @@ function Setting() {
       <div className={clsx("w-39/40 h-12  rounded",mode===2?"bg-gray-900":"bg-gray-100")}>
         <ul className={clsx("w-full  h-full px-2 flex items-center py-1 justify-around ")}>
           <li
-            className=" flex items-center w-1/3 md:w-1/4 h-9/10 justify-center gap-2 md:gap-4 rounded"
+            className=" flex items-center w-3/5 md:w-1/4 h-9/10 justify-center gap-2 md:gap-4 rounded"
             style={page == 1 ? color : { color: "gray" }}
             onClick={() => setPage(1)}
           >
