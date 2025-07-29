@@ -6,8 +6,8 @@ export const GlobalContext = createContext();
 
 const GlobalContextProvider = ({ children }) => {
   const [isAuth, setIsAuth] = useState(false);
-  const url = "http://localhost:3000";
-  // const url ="https://lectora-ai-web-server.onrender.com";
+  // const url = "http://localhost:3000";
+  const url ="https://lectora-ai-web-server.onrender.com";
   const ErrorMsg = (msg) => {
     return toast.error(msg, {
       position: "top-right",
@@ -128,7 +128,7 @@ const GlobalContextProvider = ({ children }) => {
       setCurUser(parsedResponse.curUser);
       navigate("/");
     } catch (err) {
-      return;
+      return console.error(err);
     } finally {
       setSpinner(false);
     }
@@ -145,7 +145,7 @@ const GlobalContextProvider = ({ children }) => {
       });
 
       const parsedResponse = await response.json();
-      if (!parsedResponse.success) return ErrorMsg(parsedResponse.message);
+      if (!parsedResponse.success) return console.error(parsedResponse.message);
       return setAllLectures(parsedResponse.userLecture.reverse());
     } catch (err) {
       console.error(err);

@@ -24,7 +24,7 @@ export default function Sidebar() {
   })
   return (
     <div
-      className={clsx("h-screen w-70 border-r-1 transition-all  shadow-2xl  z-48   flex gap-5 flex-col pl-5 pt-5 absolute ",mode===2?"bg-gray-900 shadow-gray-600 border-gray-800":"shadow-black bg-white border-[#50505027]")}
+      className={clsx("h-screen w-70 border-r-1 transition-all   z-48   flex gap-5 flex-col pl-5 pt-5 absolute ",mode===2?"bg-gray-900  border-gray-800":"shadow-black shadow-2xl  bg-white border-[#50505027]")}
       style={{
         top: "0px",
         left: sidebarOpen ? "0px" : "-100%",
@@ -47,7 +47,7 @@ export default function Sidebar() {
       <nav className=" w-full h-3/4 flex flex-col ">
         <p className={clsx(" text-sm  py-2 mb-3",mode===2?"text-gray-300":"text-[#303030]")}>Main Menu</p>
         <ul className="  w-full h-full flex flex-col gap-3">
-          <li className={clsx(" p-1 rounded-md w-19/20",mode===2?"hover:bg-gray-950 text-gray-400":"hover:bg-[#0000000e] text-[#000000ca]")}  onClick={()=>setSidebarOpen(false)}>
+          <li className={clsx("pl-2 py-1 rounded-md w-19/20",mode===2?"hover:bg-gray-950 text-gray-400":"hover:bg-[#0000000e] text-[#000000ca]")}  onClick={()=>setSidebarOpen(false)}>
             <Link
               to="/dashboard"
               className="flex items-center gap-5   text-md"
@@ -56,7 +56,7 @@ export default function Sidebar() {
             </Link>
           </li>
           
-          <li className={clsx(" p-1 rounded-md w-19/20",mode===2?"hover:bg-gray-950 text-gray-400":"hover:bg-[#0000000e] text-[#000000ca]")} onClick={()=>setSidebarOpen(false)}>
+          <li className={clsx("pl-2 py-1 rounded-md w-19/20",mode===2?"hover:bg-gray-950 text-gray-400":"hover:bg-[#0000000e] text-[#000000ca]")} onClick={()=>setSidebarOpen(false)}>
             <Link
               to="/code"
               className="flex items-center gap-5   text-md"
@@ -64,7 +64,7 @@ export default function Sidebar() {
               <FaCode /> Code Editor
             </Link>
           </li>
-          <li className={clsx(" p-1 rounded-md w-19/20",mode===2?"hover:bg-gray-950 text-gray-400":"hover:bg-[#0000000e] text-[#000000ca]")} onClick={()=>setSidebarOpen(false)}>
+          <li className={clsx("pl-2 py-1 rounded-md w-19/20",mode===2?"hover:bg-gray-950 text-gray-400":"hover:bg-[#0000000e] text-[#000000ca]")} onClick={()=>setSidebarOpen(false)}>
             <Link
               to="/chat"
               className="flex items-center gap-5   text-md"
@@ -72,7 +72,7 @@ export default function Sidebar() {
               <RiGeminiFill /> Ask Doubt
             </Link>
           </li>
-          <li className={clsx(" p-1 rounded-md w-19/20",mode===2?"hover:bg-gray-950 text-gray-400":"hover:bg-[#0000000e] text-[#000000ca]")} onClick={()=>setSidebarOpen(false)}>
+          <li className={clsx(" pl-2 py-1 rounded-md w-19/20",mode===2?"hover:bg-gray-950 text-gray-400":"hover:bg-[#0000000e] text-[#000000ca]")} onClick={()=>setSidebarOpen(false)}>
             <Link
               to="/setting"
               className="flex items-center gap-5  text-md"
@@ -82,7 +82,7 @@ export default function Sidebar() {
           </li>
           <button
             onClick={LogoutUser}
-            className={clsx("flex items-center gap-5  p-1 rounded-md w-19/20  text-md",mode===2?"text-gray-400 hover:bg-gray-950":"text-[#000000ca] hover:bg-[#0000000e] ")}
+            className={clsx("flex items-center gap-5  pl-2 py-1 rounded-md w-19/20  text-md",mode===2?"text-gray-400 hover:bg-gray-950":"text-[#000000ca] hover:bg-[#0000000e] ")}
           >
             <CiLogout /> Logout
           </button>

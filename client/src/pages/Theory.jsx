@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Quizz from "../components/Quizz.jsx";
 import Text from "../components/Text.jsx";
 import { RxDownload } from "react-icons/rx";
+import clsx from "clsx";
 
 function Theory({ openModelFunction }) {
   const [wait, setWait] = useState(false);
@@ -19,7 +20,7 @@ function Theory({ openModelFunction }) {
     youtubeIds,
     exercise,
     quizzes,
-    toPDF,
+    toPDF,mode
   } = useContext(GlobalContext);
 
   useEffect(() => {
@@ -36,7 +37,7 @@ function Theory({ openModelFunction }) {
   };
 
   return (
-    <div className="min-h-screen  w-screen flex flex-col relative items-center">
+    <div className={clsx("min-h-screen  w-screen flex flex-col relative items-center",mode===2?"bg-gray-900 text-white":"bg-white text-gray950")}>
       <Header heading={"Theory"} />
       <Text />
       <div className="min-h-[90vh] relative gap-5 w-full flex flex-col  justify-between p-4 ">
@@ -44,7 +45,7 @@ function Theory({ openModelFunction }) {
           <h1 className="w-full text-2xl font-semibold">{topic}</h1>
           {!wait ? (
             <button
-              className="border flex items-center w-25 justify-center h-fit py-1 px-1 rounded-2xl text-sm text-white bg-purple-600"
+              className=" flex items-center w-25 justify-center h-fit py-1 px-1 rounded-2xl text-sm text-white bg-purple-600"
               onClick={handleDowload}
             >
               <RxDownload /> Notes

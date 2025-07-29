@@ -5,10 +5,11 @@ import { MdOutlinePrivacyTip } from "react-icons/md";
 import { MdOutlineColorLens } from "react-icons/md";
 import AppearenceSetting from "../components/AppearenceSetting";
 import { GlobalContext } from "../GlobalContext.jsx";
+import clsx from "clsx";
 
 function Setting() {
   const [page, setPage] = useState(1);
-  const { url } = useContext(GlobalContext);
+  const { url,mode } = useContext(GlobalContext);
   const color = { backgroundColor: "white", color: "black" };
   const [info, setInfo] = useState({
     username: "",
@@ -45,13 +46,13 @@ function Setting() {
   }, []);
 
   return (
-    <div className={"w-screen h-fit flex flex-col items-center justify-start "}>
+    <div className={clsx("w-screen h-fit flex flex-col items-center justify-start ",mode===2?"bg-gray-900 text-white":"bg-white")}>
       <Header heading={"Setting"} />
-      <p className=" py-4 w-39/40 text-[#010102c9] text-md">
+      <p className={clsx(" py-4 w-39/40  text-md",mode===2?"text-gray-400":"")}>
         Manage your account preferences and settings
       </p>
-      <div className="w-39/40 h-12 bg-gray-100 rounded">
-        <ul className="w-full  h-full px-2 flex items-center py-1 justify-around shadow-sm">
+      <div className={clsx("w-39/40 h-12  rounded",mode===2?"bg-gray-900":"bg-gray-100")}>
+        <ul className={clsx("w-full  h-full px-2 flex items-center py-1 justify-around ")}>
           <li
             className=" flex items-center w-1/3 md:w-1/4 h-9/10 justify-center gap-2 md:gap-4 rounded"
             style={page == 1 ? color : { color: "gray" }}

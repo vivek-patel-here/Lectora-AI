@@ -4,6 +4,7 @@ import { FaRegEyeSlash } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../GlobalContext.jsx";
+import clsx from "clsx";
 function ProfileSetting({ info, setInfo }) {
   const navigate = useNavigate();
   const {
@@ -14,6 +15,7 @@ function ProfileSetting({ info, setInfo }) {
     setIsAuth,
     setCurUser,
     setSidebarOpen,
+    mode
   } = useContext(GlobalContext);
   
   const handleDeleteAccount = async (e) => {
@@ -138,13 +140,13 @@ function ProfileSetting({ info, setInfo }) {
       </p>
       <div className=" w-full h-20">
         <span>Username</span>
-        <p className="border w-full h-10  border-gray-300 rounded text-gray-400 flex items-center pl-2">
+        <p className={clsx("border w-full h-10  rounded outline-0 pl-2 pt-2 mt-1",mode===2?"border-gray-800":"border-gray-300")}>
           {info?.username}
         </p>
       </div>
       <div className=" w-full h-20">
         <p>Email Address</p>
-        <p className="border w-full h-10 border-gray-300 rounded text-gray-400 flex items-center pl-2">
+        <p className={clsx("border w-full h-10  rounded outline-0 pl-2 pt-2 mt-1",mode===2?"border-gray-800":"border-gray-300")}>
           {info?.email}
         </p>
       </div>
@@ -154,7 +156,7 @@ function ProfileSetting({ info, setInfo }) {
       >
         <p>Bio</p>
         <textarea
-          className="border w-full h-20 border-gray-300 rounded outline-0 pl-2 pt-2"
+          className={clsx("border w-full h-20  rounded outline-0 pl-2 pt-2",mode===2?"border-gray-800":"border-gray-300")}
           value={info?.bio}
           name="bio"
           onChange={handleInfoChange}
@@ -223,12 +225,13 @@ function ProfileSetting({ info, setInfo }) {
 
 function PasswordInput({ name, value, onChangehandler, head }) {
   const [show, setShow] = useState(true);
+  const {mode}=useContext(GlobalContext)
   return (
     <div className=" w-full h-20">
       <span>{head}</span>
       <div className="w-full h-11  flex items-center bg-white rounded-sm">
         <input
-          className="border w-full h-10 border-gray-300 rounded outline-0 flex item-center pl-2"
+          className={clsx(" w-full h-10  rounded text-gray-950 outline-0 flex item-center pl-2 border-0")}
           type={show ? "password" : "text"}
           name={name}
           value={value}
@@ -240,7 +243,7 @@ function PasswordInput({ name, value, onChangehandler, head }) {
             setShow(!show);
           }}
         >
-          {show ? <FaRegEyeSlash /> : <FaRegEye />}
+          {show ? <FaRegEyeSlash className="text-gray-950"/> : <FaRegEye className="text-gray-950"/>}
         </span>
       </div>
     </div>
