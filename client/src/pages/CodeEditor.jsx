@@ -123,7 +123,7 @@ console.log("Hello, World!");`);
           </p>
 
           <Editor
-            height="70vh"
+            height="60vh"
             theme={mode===2?"vs-dark":"vs-light"}
             language={lang}
             value={code}
