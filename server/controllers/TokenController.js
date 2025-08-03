@@ -24,7 +24,7 @@ export const refreshTokenController = async (req, res) => {
     { id: updatedUser._id, email: updatedUser.email },
     process.env.JWT_SECRET,
     {
-      expiresIn: "15m",
+      expiresIn: "2h",
     }
   );
 
